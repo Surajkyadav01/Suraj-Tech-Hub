@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/Suraj-Tech-Hub/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
