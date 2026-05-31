@@ -47,16 +47,17 @@ interface Service {
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState("Web Development");
+  const [selectedService, setSelectedService] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [projectCategory, setProjectCategory] = useState("All");
+  const [activeCscService, setActiveCscService] = useState<string | null>(null);
   
   // Form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    service: "Web Development",
+    service: "",
     message: ""
   });
   
@@ -86,6 +87,9 @@ export default function App() {
     setFormData(prev => ({ ...prev, [name]: value }));
     if (name === "name" || name === "email") {
       setFormErrors(prev => ({ ...prev, [name]: false }));
+    }
+    if (name === "service" && value !== "Online CSC Services") {
+      setActiveCscService(null);
     }
   };
 
@@ -610,12 +614,13 @@ export default function App() {
                   onClick={() => {
                     const formValue = service.id === "mobile" ? "App Development" : service.id === "web" ? "Web Development" : "Backend/API";
                     setFormData(prev => ({ ...prev, service: formValue }));
+                    setActiveCscService(null); // Clear any active digital/CSC services
                     scrollToSection(contactRef);
                   }}
-                  className={`bg-white border rounded-2xl p-8 shadow-sm transition-all duration-300 flex flex-col items-start cursor-pointer select-none relative active:scale-[0.97] hover:bg-slate-50/10 ${
+                  className={`bg-white border rounded-2xl p-8 transition-all duration-300 flex flex-col items-start cursor-pointer select-none relative active:scale-[0.97] ${
                     isSelected 
-                      ? "border-[#0052fe] ring-2 ring-[#0052fe]/10 shadow-md md:-translate-y-1" 
-                      : "border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+                      ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]" 
+                      : "border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1 hover:bg-slate-50/10"
                   }`}
                 >
                   {/* Subtle Selection Badge */}
@@ -732,7 +737,20 @@ export default function App() {
             
             {/* Service 1: Aadhar & PAN */}
             <div 
-              className="bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-blue-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300 relative group"
+              onClick={() => {
+                setActiveCscService("aadhar");
+                setFormData({
+                  ...formData,
+                  service: "Online CSC Services",
+                  message: "Hi Suraj Tech Hub, I need assistance with Aadhar & PAN Card services (new application or corrections/updates). Kindly connect with me."
+                });
+                scrollToSection(contactRef);
+              }}
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+                activeCscService === "aadhar"
+                  ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
+                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+              }`}
               id="online-service-card-aadhar"
             >
               <div className="absolute top-6 right-6 bg-[#0052fe]/10 text-[#0052fe] text-xs font-black px-2.5 py-1 rounded-md">
@@ -745,7 +763,7 @@ export default function App() {
                 </div>
                 
                 <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">Aadhar & PAN Services</h3>
-                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none">आधार एवं पैन कार्ड सेवाएँ</p>
+                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none font-sans">आधार एवं पैन कार्ड सेवाएँ</p>
                 
                 <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                   Fast processing for all identity cards. We facilitate corrections, address updates, biometric support, and linking PAN-Aadhar smoothly.
@@ -772,14 +790,6 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    service: "Online CSC Services",
-                    message: "Hi Suraj Tech Hub, I need assistance with Aadhar & PAN Card services (new application or corrections/updates). Kindly connect with me."
-                  });
-                  scrollToSection(contactRef);
-                }}
                 className="w-full bg-[#0052fe] hover:bg-blue-600 text-white py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md mt-auto cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Inquire Aadhaar/PAN</span>
@@ -789,7 +799,20 @@ export default function App() {
 
             {/* Service 2: Resume / Bio-Data Maker */}
             <div 
-              className="bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-blue-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300 relative group"
+              onClick={() => {
+                setActiveCscService("resume");
+                setFormData({
+                  ...formData,
+                  service: "Online CSC Services",
+                  message: "Hi Suraj Tech Hub, I want to get a professional resume, CV, or marriage bio-data designed. Please share the details required."
+                });
+                scrollToSection(contactRef);
+              }}
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+                activeCscService === "resume"
+                  ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
+                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+              }`}
               id="online-service-card-resume"
             >
               <div className="absolute top-6 right-6 bg-[#0052fe]/10 text-[#0052fe] text-xs font-black px-2.5 py-1 rounded-md">
@@ -802,7 +825,7 @@ export default function App() {
                 </div>
 
                 <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">Resume & Bio-Data Making</h3>
-                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none">रेज़्युमे एवं बायो-डाटा निर्माण</p>
+                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none font-sans">रेज़्युमे एवं बायो-डाटा निर्माण</p>
 
                 <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                   Stand out to employers with a premium customized resume. We write, format and arrange job applications and wedding bio-datas professionally.
@@ -829,14 +852,6 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    service: "Online CSC Services",
-                    message: "Hi Suraj Tech Hub, I want to get a professional resume, CV, or marriage bio-data designed. Please share the details required."
-                  });
-                  scrollToSection(contactRef);
-                }}
                 className="w-full bg-[#0052fe] hover:bg-blue-600 text-white py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md mt-auto cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Order Resume / Bio-Data</span>
@@ -846,7 +861,20 @@ export default function App() {
 
             {/* Service 3: Custom Banners, Posters & ID Cards */}
             <div 
-              className="bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-blue-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300 relative group"
+              onClick={() => {
+                setActiveCscService("poster");
+                setFormData({
+                  ...formData,
+                  service: "Online CSC Services",
+                  message: "Hi Suraj Tech Hub, I need custom banner, poster, or employee/school PVC ID card design services. Let's start discussion."
+                });
+                scrollToSection(contactRef);
+              }}
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+                activeCscService === "poster"
+                  ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
+                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+              }`}
               id="online-service-card-poster"
             >
               <div className="absolute top-6 right-6 bg-[#0052fe]/10 text-[#0052fe] text-xs font-black px-2.5 py-1 rounded-md">
@@ -859,7 +887,7 @@ export default function App() {
                 </div>
 
                 <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">Banners, Posters & ID Cards</h3>
-                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none">बैनर, पोस्टर एवं आईडी कार्ड</p>
+                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none font-sans">बैनर, पोस्टर एवं आईडी कार्ड</p>
 
                 <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                   Sleek custom design assets for marketing or printing. We create premium school/corporate ID cards, event flyers, and commercial banner layouts.
@@ -886,14 +914,6 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    service: "Online CSC Services",
-                    message: "Hi Suraj Tech Hub, I need custom banner, poster, or employee/school PVC ID card design services. Let's start discussion."
-                  });
-                  scrollToSection(contactRef);
-                }}
                 className="w-full bg-[#0052fe] hover:bg-blue-600 text-white py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md mt-auto cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Design ID/Poster</span>
@@ -903,7 +923,20 @@ export default function App() {
 
             {/* Service 4: Data Entry / Word Work */}
             <div 
-              className="bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-blue-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300 relative group"
+              onClick={() => {
+                setActiveCscService("data");
+                setFormData({
+                  ...formData,
+                  service: "Online CSC Services",
+                  message: "Hi Suraj Tech Hub, I have some data entry or office document formatting work that needs absolute precision and fast typing. Let's collaborate."
+                });
+                scrollToSection(contactRef);
+              }}
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+                activeCscService === "data"
+                  ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
+                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+              }`}
               id="online-service-card-data"
             >
               <div className="absolute top-6 right-6 bg-[#0052fe]/10 text-[#0052fe] text-xs font-black px-2.5 py-1 rounded-md">
@@ -916,7 +949,7 @@ export default function App() {
                 </div>
 
                 <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">Data Entry & Typing</h3>
-                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none">डाटा एंट्री और टाइपिंग वर्क</p>
+                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none font-sans">डाटा एंट्री और टाइपिंग वर्क</p>
 
                 <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                   Reliable and highly accurate data compiling services. We execute Excel spreadsheets formula creation, typing, document scanning, and PDF conversions.
@@ -943,14 +976,6 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    service: "Online CSC Services",
-                    message: "Hi Suraj Tech Hub, I have some data entry or office document formatting work that needs absolute precision and fast typing. Let's collaborate."
-                  });
-                  scrollToSection(contactRef);
-                }}
                 className="w-full bg-[#0052fe] hover:bg-blue-600 text-white py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md mt-auto cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Hire For Data Entry</span>
@@ -960,7 +985,20 @@ export default function App() {
 
             {/* Service 5: Graphics Designing */}
             <div 
-              className="bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-blue-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300 relative group"
+              onClick={() => {
+                setActiveCscService("graphics");
+                setFormData({
+                  ...formData,
+                  service: "Online CSC Services",
+                  message: "Hi Suraj Tech Hub, I require custom graphic designing (brand logo, event posters, or social media vectors). Let's schedule a chat."
+                });
+                scrollToSection(contactRef);
+              }}
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+                activeCscService === "graphics"
+                  ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
+                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+              }`}
               id="online-service-card-graphics"
             >
               <div className="absolute top-6 right-6 bg-[#0052fe]/10 text-[#0052fe] text-xs font-black px-2.5 py-1 rounded-md">
@@ -973,7 +1011,7 @@ export default function App() {
                 </div>
 
                 <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">Graphics Designing</h3>
-                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none">ग्राफिक्स डिज़ाइनिंग</p>
+                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none font-sans">ग्राफिक्स डिज़ाइनिंग</p>
 
                 <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                   Stunning visual solutions that communicate your message. We create vector logo icons, corporate typography cards, social media assets, and digital artwork.
@@ -1000,14 +1038,6 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    service: "Online CSC Services",
-                    message: "Hi Suraj Tech Hub, I require custom graphic designing (brand logo, event posters, or social media vectors). Let's schedule a chat."
-                  });
-                  scrollToSection(contactRef);
-                }}
                 className="w-full bg-[#0052fe] hover:bg-blue-600 text-white py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md mt-auto cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Order Graphic Design</span>
@@ -1017,7 +1047,20 @@ export default function App() {
 
             {/* Service 6: CSC Digital Cafe Portal */}
             <div 
-              className="bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-blue-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300 relative group"
+              onClick={() => {
+                setActiveCscService("csc");
+                setFormData({
+                  ...formData,
+                  service: "Online CSC Services",
+                  message: "Hi Suraj Tech Hub, I need help using official CSC portals / government form filings (driving license, certificates, utility bills). Please assist."
+                });
+                scrollToSection(contactRef);
+              }}
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+                activeCscService === "csc"
+                  ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
+                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+              }`}
               id="online-service-card-csc"
             >
               <div className="absolute top-6 right-6 bg-[#0052fe]/10 text-[#0052fe] text-xs font-black px-2.5 py-1 rounded-md">
@@ -1030,7 +1073,7 @@ export default function App() {
                 </div>
 
                 <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">Government Portals & CSC</h3>
-                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none">ऑनलाइन सरकारी फॉर्म एवं डिजिटल कैफ़े</p>
+                <p className="text-slate-500 text-xs font-semibold mb-4 leading-none font-sans">ऑनलाइन सरकारी फॉर्म एवं डिजिटल कैफ़े</p>
 
                 <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                   One-stop portal support for driving license processing, online electricity bills, digital income/caste certification, passport assistance, and voter ID cards.
@@ -1057,14 +1100,6 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    service: "Online CSC Services",
-                    message: "Hi Suraj Tech Hub, I need help using official CSC portals / government form filings (driving license, certificates, utility bills). Please assist."
-                  });
-                  scrollToSection(contactRef);
-                }}
                 className="w-full bg-[#0052fe] hover:bg-blue-600 text-white py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md mt-auto cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Apply Online Portal</span>
@@ -1601,7 +1636,7 @@ export default function App() {
                             onChange={handleInputChange}
                             className="w-full bg-[#0c1524] text-white border border-slate-700 rounded-lg px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#0052fe] focus:border-transparent text-sm appearance-none cursor-pointer"
                           >
-                            <option value="Interested Service?">Interested Service?</option>
+                            <option value="">Interested Service?</option>
                             <option value="App Development">App Development</option>
                             <option value="Web Development">Web Development</option>
                             <option value="Backend/API">Backend/API</option>
