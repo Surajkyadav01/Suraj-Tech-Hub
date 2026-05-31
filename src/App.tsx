@@ -620,7 +620,7 @@ export default function App() {
                   className={`bg-white border rounded-2xl p-8 transition-all duration-300 flex flex-col items-start cursor-pointer select-none relative active:scale-[0.97] ${
                     isSelected 
                       ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]" 
-                      : "border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1 hover:bg-slate-50/10"
+                      : "border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1 hover:bg-slate-50/10"
                   }`}
                 >
                   {/* Subtle Selection Badge */}
@@ -746,10 +746,10 @@ export default function App() {
                 });
                 scrollToSection(contactRef);
               }}
-              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
                 activeCscService === "aadhar"
                   ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
-                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+                  : "bg-white border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1"
               }`}
               id="online-service-card-aadhar"
             >
@@ -808,10 +808,10 @@ export default function App() {
                 });
                 scrollToSection(contactRef);
               }}
-              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
                 activeCscService === "resume"
                   ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
-                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+                  : "bg-white border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1"
               }`}
               id="online-service-card-resume"
             >
@@ -870,10 +870,10 @@ export default function App() {
                 });
                 scrollToSection(contactRef);
               }}
-              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
                 activeCscService === "poster"
                   ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
-                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+                  : "bg-white border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1"
               }`}
               id="online-service-card-poster"
             >
@@ -932,10 +932,10 @@ export default function App() {
                 });
                 scrollToSection(contactRef);
               }}
-              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
                 activeCscService === "data"
                   ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
-                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+                  : "bg-white border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1"
               }`}
               id="online-service-card-data"
             >
@@ -994,10 +994,10 @@ export default function App() {
                 });
                 scrollToSection(contactRef);
               }}
-              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
                 activeCscService === "graphics"
                   ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
-                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+                  : "bg-white border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1"
               }`}
               id="online-service-card-graphics"
             >
@@ -1056,10 +1056,10 @@ export default function App() {
                 });
                 scrollToSection(contactRef);
               }}
-              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xs transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
+              className={`border rounded-3xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 relative group cursor-pointer select-none active:scale-[0.98] ${
                 activeCscService === "csc"
                   ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]"
-                  : "bg-slate-50/50 hover:bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg md:hover:-translate-y-1"
+                  : "bg-white border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1"
               }`}
               id="online-service-card-csc"
             >
@@ -1158,7 +1158,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-blue-100 transition-all duration-300 group"
+                className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:shadow-xl hover:border-blue-300 transition-all duration-300 group"
                 id="proj-card-web"
               >
                 <div>
@@ -1248,7 +1248,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-blue-100 transition-all duration-300 group"
+                className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:shadow-xl hover:border-blue-300 transition-all duration-300 group"
                 id="proj-card-mobile"
               >
                 <div>
@@ -1352,7 +1352,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-blue-100 transition-all duration-300 group"
+                className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:shadow-xl hover:border-blue-300 transition-all duration-300 group"
                 id="proj-card-api"
               >
                 <div>
