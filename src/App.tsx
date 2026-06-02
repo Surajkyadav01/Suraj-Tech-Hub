@@ -244,17 +244,28 @@ export default function App() {
       <header className="sticky top-0 z-50 w-full bg-[#0052fe] text-white border-b border-blue-600/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 md:py-4 flex items-center justify-between">
           
-          {/* Logo container with new Custom Image Logo */}
+          {/* Logo container matching exact design of SURAJ logo */}
           <div 
-            className="flex items-center select-none cursor-pointer group"
+            className="flex items-center gap-3 select-none cursor-pointer group"
             onClick={() => scrollToSection(homeRef)}
             id="app-logo-container"
           >
-            <img 
-              src="https://drive.google.com/file/d/1vVR3qCAaromH5YWElr6yBbz0Femhg2FF/view?usp=drivesdk" 
-              alt="Suraj Tech Hub Logo" 
-              className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-            />
+            <div className="relative flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-gradient-to-tr from-[#FFC000] to-yellow-300 text-slate-900 shadow-lg shadow-yellow-500/10 group-hover:rotate-6 transition-transform duration-300 font-display font-black text-xl md:text-2xl">
+              S
+              <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#0052fe] border-2 border-white flex items-center justify-center">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+              </span>
+            </div>
+            <div className="flex flex-col items-start leading-none">
+              <div className="flex items-center">
+                <span className="text-xl md:text-2xl font-black tracking-tight text-white font-display">SURA</span>
+                <span className="relative text-xl md:text-2xl font-black tracking-tight text-white font-display inline-block pr-[2px]">
+                  J
+                  <span className="absolute -top-[1px] md:-top-[1.5px] right-[0.5px] md:right-[1px] w-[8px] h-[8px] md:w-[9px] md:h-[9px] rounded-full bg-[#FFC000] shadow-sm shadow-yellow-500/50 animate-pulse"></span>
+                </span>
+              </div>
+              <span className="text-[8px] md:text-[9px] font-black tracking-[0.35em] text-yellow-300 uppercase mt-1">TECH HUB</span>
+            </div>
           </div>
 
           {/* Desktop Navigation Navigation Links */}
@@ -1689,15 +1700,26 @@ export default function App() {
       <footer className="bg-[#090f1a] text-slate-400 py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-800" id="app-footer">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div 
-            className="flex items-center select-none cursor-pointer group"
+            className="flex items-center gap-3 select-none cursor-pointer group"
             onClick={() => scrollToSection(homeRef)}
             id="footer-logo"
           >
-             <img 
-              src="https://drive.google.com/file/d/1vVR3qCAaromH5YWElr6yBbz0Femhg2FF/view?usp=drivesdk" 
-              alt="Suraj Tech Hub Logo" 
-              className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-            />
+            <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FFC000] to-yellow-300 text-slate-900 shadow-md group-hover:rotate-6 transition-transform duration-300 font-display font-black text-lg">
+              S
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 rounded-full bg-[#090f1a] border border-white flex items-center justify-center">
+                <span className="w-1 h-1 rounded-full bg-emerald-400 animate-ping"></span>
+              </span>
+            </div>
+            <div className="flex flex-col items-start leading-none text-left">
+              <div className="flex items-center">
+                <span className="text-lg font-black tracking-tight text-white font-display">SURA</span>
+                <span className="relative text-lg font-black tracking-tight text-white font-display inline-block pr-[1.5px]">
+                  J
+                  <span className="absolute -top-[1px] right-[0.5px] w-[7px] h-[7px] rounded-full bg-[#FFC000] shadow-sm shadow-yellow-500/50 animate-pulse"></span>
+                </span>
+              </div>
+              <span className="text-[8px] font-bold tracking-[0.3em] text-yellow-300 uppercase mt-1">TECH HUB</span>
+            </div>
           </div>
 
           {/* Connected Social Links */}
