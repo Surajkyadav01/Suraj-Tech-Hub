@@ -36,6 +36,19 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
+// Beautiful, high-fidelity SVG icon matching the new Suraj Tech Hub logo exactly
+function SurajLogoIcon({ className = "w-14 h-14 md:w-16 md:h-16" }: { className?: string }) {
+  return (
+    <img 
+      src="https://img.sanishtech.com/u/7a2f598cb6333c277b3aebb8f5918c55.png" 
+      alt="Suraj Tech Hub Logo" 
+      className={`${className} object-contain transition-all duration-300 shrink-0 filter drop-shadow-[0_4px_12px_rgba(255,192,0,0.15)]`}
+      referrerPolicy="no-referrer"
+      style={{ imageRendering: "high-quality" }}
+    />
+  );
+}
+
 // Service structure matching the "Our Expertise" section
 interface Service {
   id: string;
@@ -250,9 +263,9 @@ export default function App() {
             onClick={() => scrollToSection(homeRef)}
             id="app-logo-container"
           >
-            <div className="relative flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-gradient-to-tr from-[#FFC000] to-yellow-300 text-slate-900 shadow-lg shadow-yellow-500/10 group-hover:rotate-6 transition-transform duration-300 font-display font-black text-xl md:text-2xl">
-              S
-              <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#0052fe] border-2 border-white flex items-center justify-center">
+            <div className="relative">
+              <SurajLogoIcon className="w-14 h-14 md:w-16 md:h-16 group-hover:scale-110 transition-transform duration-300" />
+              <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-[#0052fe] border-2 border-white flex items-center justify-center z-10">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
               </span>
             </div>
@@ -264,7 +277,7 @@ export default function App() {
                   <span className="absolute -top-[1px] md:-top-[1.5px] right-[0.5px] md:right-[1px] w-[8px] h-[8px] md:w-[9px] md:h-[9px] rounded-full bg-[#FFC000] shadow-sm shadow-yellow-500/50 animate-pulse"></span>
                 </span>
               </div>
-              <span className="text-[8px] md:text-[9px] font-black tracking-[0.35em] text-yellow-300 uppercase mt-1">TECH HUB</span>
+              <span className="text-[8px] md:text-[9px] font-black tracking-[0.35em] text-yellow-300 uppercase mt-[-2px]">TECH HUB</span>
             </div>
           </div>
 
@@ -1704,9 +1717,9 @@ export default function App() {
             onClick={() => scrollToSection(homeRef)}
             id="footer-logo"
           >
-            <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FFC000] to-yellow-300 text-slate-900 shadow-md group-hover:rotate-6 transition-transform duration-300 font-display font-black text-lg">
-              S
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 rounded-full bg-[#090f1a] border border-white flex items-center justify-center">
+            <div className="relative">
+              <SurajLogoIcon className="w-14 h-14 group-hover:scale-110 transition-transform duration-300" />
+              <span className="absolute bottom-0 right-0 w-3 rounded-full bg-[#090f1a] border border-white flex items-center justify-center z-10">
                 <span className="w-1 h-1 rounded-full bg-emerald-400 animate-ping"></span>
               </span>
             </div>
@@ -1718,7 +1731,7 @@ export default function App() {
                   <span className="absolute -top-[1px] right-[0.5px] w-[7px] h-[7px] rounded-full bg-[#FFC000] shadow-sm shadow-yellow-500/50 animate-pulse"></span>
                 </span>
               </div>
-              <span className="text-[8px] font-bold tracking-[0.3em] text-yellow-300 uppercase mt-1">TECH HUB</span>
+              <span className="text-[8px] font-bold tracking-[0.3em] text-yellow-300 uppercase mt-[-2px]">TECH HUB</span>
             </div>
           </div>
 
