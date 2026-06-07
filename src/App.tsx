@@ -40,7 +40,7 @@ import { motion, AnimatePresence } from "motion/react";
 function SurajLogoIcon({ className = "w-14 h-14 md:w-16 md:h-16" }: { className?: string }) {
   return (
     <img 
-      src="https://img.sanishtech.com/u/7a2f598cb6333c277b3aebb8f5918c55.png" 
+      src="https://i.imgur.com/JSFnw2n.png" 
       alt="Suraj Tech Hub Logo" 
       className={`${className} object-contain transition-all duration-300 shrink-0 filter drop-shadow-[0_4px_12px_rgba(255,192,0,0.15)]`}
       referrerPolicy="no-referrer"
@@ -65,6 +65,47 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [projectCategory, setProjectCategory] = useState("All");
   const [activeCscService, setActiveCscService] = useState<string | null>(null);
+  
+  // Real projects list (using direct real imagery)
+  const projectsList = [
+    {
+      id: "foodiex",
+      category: "Web",
+      label: "Web Application & Delivery Portal",
+      title: "Foodiex Delivery Storefront",
+      description: "An outstanding food marketplace and secure delivery app with real-time driver tracking, responsive cart updates, and robust online transactions.",
+      imgUrl: "https://i.imgur.com/YR8FLNU.png",
+      tags: ["React (Vite)", "TailwindCSS", "Node.js API", "Stripe Checkout"],
+      placeholder: "Foodiex Checkout v2.1",
+      domain: "foodiex-store.com",
+      ctaText: "Hi Suraj Tech Hub, I am very interested in building a project similar to the 'Foodiex Delivery Storefront' for my business. Let's schedule a call to discuss."
+    },
+    {
+      id: "flipzox",
+      category: "Mobile",
+      label: "Mobile Application & Retail Store",
+      title: "Flipzox Sneaker Store",
+      description: "A beautiful, native footwear catalog matching sensor metrics with dynamic, responsive swipe UI and smart checkout widgets.",
+      imgUrl: "https://i.imgur.com/n7jUTpJ.png",
+      tags: ["React Native", "Expo Core", "SQLite Store", "Core NFC Support"],
+      placeholder: "Flipzox App",
+      rating: "⭐ 4.9",
+      domain: "flipzox-app",
+      ctaText: "Hi Suraj Tech Hub, I would love to build an elegant native mobile application similar to the 'Flipzox Sneaker Store'. Please send more details on mobile services."
+    },
+    {
+      id: "suraj-tech",
+      category: "API",
+      label: "Corporate Identity Showcase",
+      title: "Suraj Tech Agency Portfolio",
+      description: "The modern, high-contrast, fully responsive platform engineered to represent Suraj Tech Hub's brand identity, pricing indexes, and active digital support.",
+      imgUrl: "https://i.imgur.com/GOyKVQN.png",
+      tags: ["React (Vite)", "TailwindCSS v4", "Lucide React", "Motion Design"],
+      placeholder: "Suraj Tech Hub v3.0",
+      domain: "suraj-tech-hub.com",
+      ctaText: "Hi Suraj Tech Hub, I want to develop a custom showcase website or corporate portfolio for my brand inspired by the 'Suraj Tech Agency Portfolio'. Let's start the dialogue."
+    }
+  ];
   
   // Form state
   const [formData, setFormData] = useState({
@@ -1163,286 +1204,117 @@ export default function App() {
 
           {/* Projects Showcases */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10" id="projects-grid">
-            
-            {/* Project 1: Web Dashboard */}
-            {(projectCategory === "All" || projectCategory === "Web") && (
-              <motion.div 
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:shadow-xl hover:border-blue-300 transition-all duration-300 group"
-                id="proj-card-web"
-              >
-                <div>
-                  {/* Visual representation: CSS Browser Mockup */}
-                  <div className="w-full bg-slate-900/5 aspect-[4/3] rounded-2xl mb-6 p-4 flex flex-col overflow-hidden relative border border-slate-100 shadow-inner group-hover:-translate-y-1 transition-transform duration-300">
-                    
-                    {/* Browser top-bar */}
-                    <div className="flex items-center gap-1.5 pb-3 border-b border-slate-200/50 mb-3 shrink-0">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-                      <div className="ml-2 w-32 h-3.5 bg-slate-200/80 rounded-md text-[8px] flex items-center justify-center font-mono text-slate-400 truncate">alpha-ecommerce.com</div>
-                    </div>
+            {projectsList.map((project) => {
+              // Map filtering categories
+              if (projectCategory !== "All") {
+                if (projectCategory === "Web" && project.category !== "Web") return null;
+                if (projectCategory === "Mobile" && project.category !== "Mobile") return null;
+                if (projectCategory === "API" && project.category !== "API") return null;
+              }
 
-                    {/* Dashboard Page content inside */}
-                    <div className="flex-grow flex flex-col gap-2.5 justify-between">
-                      <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                        <div className="h-3.5 w-16 bg-slate-200 rounded"></div>
-                        <div className="h-3.5 w-20 bg-[#0052fe]/10 rounded flex items-center justify-center text-[8px] font-bold text-[#0052fe]">Live Telemetry</div>
-                      </div>
-
-                      {/* Dynamic stat cards */}
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-white p-2 rounded-lg border border-slate-100 shadow-xs flex flex-col gap-1">
-                          <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider">Revenue</span>
-                          <span className="text-xs font-black text-slate-800">$14,240</span>
-                          <span className="text-[7px] font-semibold text-emerald-500 font-mono">+12.4%</span>
-                        </div>
-                        <div className="bg-white p-2 rounded-lg border border-slate-100 shadow-xs flex flex-col gap-1">
-                          <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider">Sales Today</span>
-                          <span className="text-xs font-black text-slate-800">432 units</span>
-                          <span className="text-[7px] font-semibold text-emerald-500 font-mono">+8.1%</span>
-                        </div>
-                      </div>
-
-                      {/* Mini Bar Chart */}
-                      <div className="bg-blue-50/40 p-2 rounded-xl border border-blue-100/20 flex flex-col gap-1">
-                        <span className="text-[7px] text-slate-400 font-bold">Conversion Rate History</span>
-                        <div className="flex items-end gap-1.5 h-10 pt-1 justify-center">
-                          <div className="w-3.5 h-4 bg-slate-200 rounded-xs"></div>
-                          <div className="w-3.5 h-6 bg-slate-200 rounded-xs"></div>
-                          <div className="w-3.5 h-5 bg-slate-200 rounded-xs"></div>
-                          <div className="w-3.5 h-8 bg-[#0052fe] rounded-xs animate-pulse"></div>
-                          <div className="w-3.5 h-7 bg-slate-200 rounded-xs"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Core description details */}
-                  <span className="inline-block bg-blue-50 text-[#0052fe] text-xs font-bold px-3 py-1 rounded-full mb-3">
-                    Web Application
-                  </span>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Alpha E-Commerce Dashboard</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    An outstanding corporate analytics interface built with rapid responsiveness, dynamic checkouts, and custom inventory management.
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {["React (Vite)", "TailwindCSS", "Recharts", "Node.js"].map(tag => (
-                      <span key={tag} className="text-[11px] font-bold font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    setFormData({
-                      ...formData,
-                      service: "Web Development",
-                      message: "Hi Suraj Tech Hub, I am very interested in building a project similar to the 'Alpha E-Commerce Dashboard' for my business. Let's schedule a call to discuss."
-                    });
-                    scrollToSection(contactRef);
-                  }}
-                  className="w-full bg-[#0052fe] text-white hover:bg-blue-600 py-3 rounded-xl font-bold text-sm tracking-wide transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-auto"
+              return (
+                <motion.div 
+                  layout
+                  key={project.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:shadow-xl hover:border-blue-300 transition-all duration-300 group animate-fadeIn"
+                  id={`proj-card-${project.id}`}
                 >
-                  <span>Build This Project</span>
-                  <ArrowRight size={14} />
-                </button>
-              </motion.div>
-            )}
-
-            {/* Project 2: Mobile App */}
-            {(projectCategory === "All" || projectCategory === "Mobile") && (
-              <motion.div 
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:shadow-xl hover:border-blue-300 transition-all duration-300 group"
-                id="proj-card-mobile"
-              >
-                <div>
-                  {/* Visual representation: CSS Mobile Phone Mockup */}
-                  <div className="w-full bg-slate-900/5 aspect-[4/3] rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative border border-slate-100 shadow-inner group-hover:-translate-y-1 transition-transform duration-300">
-                    
-                    {/* Smartphone Bezel */}
-                    <div className="w-40 bg-slate-950 h-36 rounded-t-2xl border-4 border-slate-800 p-2 shadow-2xl relative flex flex-col gap-1.5 align-middle">
-                      {/* Dynamic Island / Speaker */}
-                      <div className="absolute top-1 left-12 right-12 h-2.5 bg-black rounded-full z-20 flex items-center justify-center">
-                        <div className="w-1 h-1 bg-blue-900/40 rounded-full"></div>
-                      </div>
-
-                      {/* Screen content */}
-                      <div className="bg-slate-900 text-white rounded-lg flex-grow p-1.5 flex flex-col justify-between overflow-hidden relative text-[8px]">
-                        
-                        {/* Status bar */}
-                        <div className="flex justify-between items-center text-[6px] text-slate-400 font-bold mb-1 shrink-0">
-                          <span>9:41 AM</span>
-                          <div className="flex items-center gap-1">
-                            <span>LTE</span>
-                            <div className="w-3.5 h-1.5 border border-slate-400 rounded-xs"></div>
+                  <div className="flex flex-col h-full justify-between">
+                    <div>
+                      {project.category === "Mobile" ? (
+                        /* Smartphone Mock */
+                        <div className="w-full bg-slate-100 aspect-[4/3] rounded-2xl mb-6 flex items-center justify-center overflow-hidden relative border border-slate-100 shadow-inner group-hover:-translate-y-1 transition-transform duration-300">
+                          {/* Smartphone Mock Frame */}
+                          <div className="w-36 bg-slate-950 h-full rounded-t-3xl border-x-4 border-t-4 border-slate-800 p-1.5 shadow-2xl relative flex flex-col mt-4">
+                            {/* Dynamic Island / Speaker */}
+                            <div className="absolute top-1.5 left-10 right-10 h-2 bg-black rounded-full z-20 flex items-center justify-center">
+                              <div className="w-1 h-1 bg-slate-800 rounded-full"></div>
+                            </div>
+                            {/* Screen content */}
+                            <div className="bg-slate-900 w-full h-full rounded-t-2xl overflow-hidden relative flex flex-col">
+                              <img
+                                src={project.imgUrl}
+                                alt={project.title}
+                                className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                                referrerPolicy="no-referrer"
+                              />
+                              <div className="absolute bottom-0 left-0 right-0 bg-slate-950/70 backdrop-blur-xs p-1 px-2 flex justify-between items-center select-none text-[7px] font-sans">
+                                <span className="font-extrabold text-white">{project.placeholder}</span>
+                                {project.rating && <span className="text-yellow-400 font-extrabold text-[6.5px]">{project.rating}</span>}
+                              </div>
+                            </div>
                           </div>
                         </div>
-
-                        {/* App header */}
-                        <div className="flex items-center justify-between">
-                          <span className="font-extrabold text-white text-[9px]">MyFit Coach</span>
-                          <span className="text-[#FFC000] font-black tracking-wide">● ON</span>
-                        </div>
-
-                        {/* Tracker Graph */}
-                        <div className="flex-grow flex flex-col gap-1.5 mt-2 justify-center">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[7px] text-slate-400">Heart Rate Tracker</span>
-                            <span className="text-[7px] font-bold text-rose-500 font-mono animate-pulse">72 BPM</span>
+                      ) : (
+                        /* Browser Mock */
+                        <div className="w-full bg-slate-100 aspect-[4/3] rounded-2xl mb-6 flex flex-col overflow-hidden relative border border-slate-100 shadow-inner group-hover:-translate-y-1 transition-transform duration-300">
+                          {/* Browser top-bar */}
+                          <div className="flex items-center gap-1.5 px-4 py-2.5 bg-slate-100 border-b border-slate-200/60 shrink-0 select-none">
+                            <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                            <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                            <div className="ml-2 px-3 py-0.5 bg-white border border-slate-200/50 rounded text-[9px] font-mono text-slate-400 truncate w-40 flex items-center justify-center gap-1">
+                              <span>🔒</span> {project.domain || "app-preview.net"}
+                            </div>
                           </div>
-                          
-                          {/* Live Heartbeat SVG graph illustration */}
-                          <div className="h-8 bg-slate-800/50 rounded flex items-center overflow-hidden border border-slate-700/50 relative">
-                            <svg className="w-full h-full stroke-rose-500 stroke-2 fill-none" viewBox="0 0 100 40">
-                              <path d="M 0 20 L 20 20 L 25 10 L 30 30 L 35 20 L 50 20 L 55 5 L 60 35 L 65 20 L 100 20" />
-                            </svg>
-                          </div>
-                        </div>
-
-                        {/* Fast dynamic values */}
-                        <div className="grid grid-cols-2 gap-1.5 shrink-0">
-                          <div className="bg-slate-800 p-1 rounded border border-slate-700/50 text-center">
-                            <span className="block text-[5px] text-slate-400 uppercase font-black">Steps</span>
-                            <span className="block text-[8px] font-bold text-[#FFC000]">9,240</span>
-                          </div>
-                          <div className="bg-slate-800 p-1 rounded border border-slate-700/50 text-center">
-                            <span className="block text-[5px] text-slate-400 uppercase font-black">Calorie</span>
-                            <span className="block text-[8px] font-bold text-white">450 kcal</span>
+                          {/* Image content */}
+                          <div className="flex-grow w-full h-full overflow-hidden relative">
+                            <img
+                              src={project.imgUrl}
+                              alt={project.title}
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent flex items-end p-3">
+                              <span className="bg-[#0052fe] text-white text-[10px] font-extrabold px-2.5 py-1 rounded shadow">
+                                {project.placeholder}
+                              </span>
+                            </div>
                           </div>
                         </div>
+                      )}
 
+                      {/* Core description details */}
+                      <span className={`inline-block text-xs font-bold px-3 py-1 rounded-full mb-3 ${
+                        project.category === "Web" ? "bg-blue-50 text-[#0052fe]" :
+                        project.category === "Mobile" ? "bg-purple-50 text-purple-600" :
+                        "bg-emerald-50 text-emerald-600"
+                      }`}>
+                        {project.label}
+                      </span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">{project.title}</h3>
+                      <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-1.5 mb-6">
+                        {project.tags.map(tag => (
+                          <span key={tag} className="text-[11px] font-bold font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">{tag}</span>
+                        ))}
                       </div>
                     </div>
 
+                    <button
+                      onClick={() => {
+                        setFormData({
+                          ...formData,
+                          service: project.category === "Web" ? "Web Development" : project.category === "Mobile" ? "App Development" : "Backend/API",
+                          message: project.ctaText
+                        });
+                        scrollToSection(contactRef);
+                      }}
+                      className="w-full bg-[#0052fe] text-white hover:bg-blue-600 py-3 rounded-xl font-bold text-sm tracking-wide transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-8"
+                    >
+                      <span>Build This Project</span>
+                      <ArrowRight size={14} />
+                    </button>
                   </div>
-
-                  {/* Core description details */}
-                  <span className="inline-block bg-purple-50 text-purple-600 text-xs font-bold px-3 py-1 rounded-full mb-3">
-                    Mobile Application
-                  </span>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Apex Biometrics Platform</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    A gorgeous native health & fitness application linking biometric sensors with offline dynamic chart caching.
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {["React Native", "Expo Core", "SQLite Store", "Firebase Sync"].map(tag => (
-                      <span key={tag} className="text-[11px] font-bold font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    setFormData({
-                      ...formData,
-                      service: "App Development",
-                      message: "Hi Suraj Tech Hub, I would love to build an elegant native mobile application similar to the 'Apex Biometrics Platform'. Please send more details on mobile services."
-                    });
-                    scrollToSection(contactRef);
-                  }}
-                  className="w-full bg-[#0052fe] text-white hover:bg-blue-600 py-3 rounded-xl font-bold text-sm tracking-wide transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-auto"
-                >
-                  <span>Build This Project</span>
-                  <ArrowRight size={14} />
-                </button>
-              </motion.div>
-            )}
-
-            {/* Project 3: API Dashboard */}
-            {(projectCategory === "All" || projectCategory === "API") && (
-              <motion.div 
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:shadow-xl hover:border-blue-300 transition-all duration-300 group"
-                id="proj-card-api"
-              >
-                <div>
-                  {/* Visual representation: CSS Code Editor-style Mockup */}
-                  <div className="w-full bg-slate-900/5 aspect-[4/3] rounded-2xl mb-6 p-4 flex flex-col overflow-hidden relative border border-slate-100 shadow-inner group-hover:-translate-y-1 transition-transform duration-300">
-                    
-                    {/* Terminal frame top header */}
-                    <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-3 shrink-0">
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
-                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
-                        <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
-                      </div>
-                      <span className="text-[8px] text-slate-400 font-mono">datapipe-gateway - bash</span>
-                      <div className="w-10"></div>
-                    </div>
-
-                    {/* Developer Code Command lines */}
-                    <div className="flex-grow bg-[#090f1a] text-emerald-400 font-mono text-[8px] p-2 md:p-3 rounded-xl overflow-hidden shadow-2xl flex flex-col gap-1">
-                      <div className="flex items-center gap-1 text-slate-400 font-bold shrink-0">
-                        <span>$</span>
-                        <span className="text-white">npm run deploy --prod</span>
-                      </div>
-                      <div className="text-slate-400 font-normal shrink-0 text-[7px] md:text-[8px]">
-                        &gt; deploying quantum-api-nodes...
-                      </div>
-                      <div className="text-emerald-400 text-[7px] md:text-[8px] shrink-0">
-                        ✔ Compilation successful [280ms]
-                      </div>
-                      
-                      {/* JSON response visualization block */}
-                      <div className="mt-1 text-yellow-400 bg-slate-900/80 p-1.5 rounded border border-slate-800 select-none overflow-hidden flex-grow flex flex-col justify-between leading-normal text-[7px]">
-                        <div>
-                          <p className="text-slate-500 font-bold text-[6.5px]">// GET /api/v1/metrics</p>
-                          <p className="text-blue-300">{`{`}</p>
-                          <p className="pl-1.5">"status": <span className="text-emerald-300">"SUCCESS"</span>,</p>
-                          <p className="pl-1.5">"throughput": <span className="text-amber-300">"14.8k tx/s"</span>,</p>
-                          <p className="pl-1.5">"latency_ms": <span className="text-emerald-300">12.4</span></p>
-                          <p className="text-blue-300">{`}`}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Core description details */}
-                  <span className="inline-block bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full mb-3">
-                    Backend & API Integration
-                  </span>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Quantum Database Engine</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    Robust developer portal built to transfer high-throughput secured operations, microservices API calls, and sync SQL clusters.
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {["Node.js (Express)", "PostgreSQL", "Docker", "Redis Cache"].map(tag => (
-                      <span key={tag} className="text-[11px] font-bold font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    setFormData({
-                      ...formData,
-                      service: "Backend/API",
-                      message: "Hi Suraj Tech Hub, I need a robust API gateway or backend database engine similar to the 'Quantum Database Engine' for our systems. Let's start the dialogue."
-                    });
-                    scrollToSection(contactRef);
-                  }}
-                  className="w-full bg-[#0052fe] text-white hover:bg-blue-600 py-3 rounded-xl font-bold text-sm tracking-wide transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-auto"
-                >
-                  <span>Build This Project</span>
-                  <ArrowRight size={14} />
-                </button>
-              </motion.div>
-            )}
-
+                </motion.div>
+              );
+            })}
           </div>
           
         </div>
@@ -1762,7 +1634,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-
     </div>
   );
 }
