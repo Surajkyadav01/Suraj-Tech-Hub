@@ -78,7 +78,7 @@ export default function App() {
       label: "Web Application & Delivery Portal",
       title: "Foodiex Delivery Storefront",
       description: "An outstanding food marketplace and secure delivery app with real-time driver tracking, responsive cart updates, and robust online transactions.",
-      imgUrl: "https://i.imgur.com/YR8FLNU.png",
+      imgUrl: "https://i.imgur.com/YR8FLNUl.png",
       tags: ["React (Vite)", "TailwindCSS", "Node.js API", "Stripe Checkout"],
       placeholder: "Foodiex Checkout v2.1",
       domain: "foodiex-store.com",
@@ -90,7 +90,7 @@ export default function App() {
       label: "Mobile Application & Retail Store",
       title: "Flipzox Sneaker Store",
       description: "A beautiful, native footwear catalog matching sensor metrics with dynamic, responsive swipe UI and smart checkout widgets.",
-      imgUrl: "https://i.imgur.com/n7jUTpJ.png",
+      imgUrl: "https://i.imgur.com/n7jUTpJl.png",
       tags: ["React Native", "Expo Core", "SQLite Store", "Core NFC Support"],
       placeholder: "Flipzox App",
       rating: "⭐ 4.9",
@@ -103,7 +103,7 @@ export default function App() {
       label: "Corporate Identity Showcase",
       title: "Suraj Tech Agency Portfolio",
       description: "The modern, high-contrast, fully responsive platform engineered to represent Suraj Tech Hub's brand identity, pricing indexes, and active digital support.",
-      imgUrl: "https://i.imgur.com/GOyKVQN.png",
+      imgUrl: "https://i.imgur.com/GOyKVQNl.png",
       tags: ["React (Vite)", "TailwindCSS v4", "Lucide React", "Motion Design"],
       placeholder: "Suraj Tech Hub v3.0",
       domain: "suraj-tech-hub.com",
@@ -457,10 +457,10 @@ export default function App() {
           id="hero-grid-overlay"
         ></div>
 
-        {/* Brand-aligned interactive glowing soft light orbs */}
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-400/15 blur-[120px] -z-10 animate-[pulse_7s_ease-in-out_infinite]" id="hero-glow-1"></div>
-        <div className="absolute bottom-[-5%] right-[-5%] w-[450px] h-[450px] rounded-full bg-[#FFC000]/12 blur-[110px] -z-10 animate-[pulse_9s_ease-in-out_infinite]" id="hero-glow-2"></div>
-        <div className="absolute top-[25%] left-[25%] w-[400px] h-[400px] rounded-full bg-indigo-300/12 blur-[100px] -z-10 animate-[pulse_11s_ease-in-out_infinite]" id="hero-glow-3"></div>
+        {/* Brand-aligned interactive glowing soft light orbs - performance optimized for mobile PageSpeed */}
+        <div className="absolute top-[-10%] left-[-10%] w-[280px] md:w-[500px] h-[280px] md:h-[500px] rounded-full bg-blue-400/15 blur-[60px] md:blur-[120px] -z-10 md:animate-[pulse_7s_ease-in-out_infinite]" id="hero-glow-1"></div>
+        <div className="absolute bottom-[-5%] right-[-5%] w-[250px] md:w-[450px] h-[250px] md:h-[450px] rounded-full bg-[#FFC000]/12 blur-[50px] md:blur-[110px] -z-10 md:animate-[pulse_9s_ease-in-out_infinite]" id="hero-glow-2"></div>
+        <div className="absolute top-[25%] left-[25%] w-[200px] md:w-[400px] h-[200px] md:h-[400px] rounded-full bg-indigo-300/12 blur-[40px] md:blur-[100px] -z-10 md:animate-[pulse_11s_ease-in-out_infinite]" id="hero-glow-3"></div>
 
         {/* Floating tech signature cards in side margins (large screens only to keep layout pristine) */}
         <motion.div 
