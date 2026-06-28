@@ -3,18 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suraj Tech Hub - Premium Digital Engineering & IT Solutions</title>
+    <meta name="description" content="Suraj Tech Hub is a premium digital agency delivering modern full-stack web platforms, native mobile applications, and reliable API services designed to scale." />
     
-    <!-- SEO Tags for Suraj Tech Hub -->
-    <title>Suraj Tech Hub - Web & App Development Services</title>
-    <meta name="description" content="Suraj Tech Hub offers professional web development, app development, UI/UX designing, and online tech services.">
-    <meta name="keywords" content="Suraj Tech Hub, web development, app development, online services, tech hub">
+    <!-- Preconnect to Google Fonts and Imgur for rapid DNS resolution -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://i.imgur.com" />
+    
+    <!-- High-priority preload for the official high-resolution logo (LCP optimization) -->
+    <link rel="preload" as="image" href="https://i.imgur.com/JSFnw2n.png" fetchpriority="high" />
 
-    <!-- Google Search Console Verification Tag -->
-    <meta name="google-site-verification" content="uhF2ttGy3SrosmWM15THtwlf45IESQa4lJbZ9Yl-lPU" />
-
+    <!-- Performance font loading: load fonts asynchronously to prevent render-blocking FCP delays -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+
