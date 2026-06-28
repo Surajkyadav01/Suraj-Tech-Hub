@@ -44,6 +44,10 @@ function SurajLogoIcon({ className = "w-14 h-14 md:w-16 md:h-16" }: { className?
       alt="Suraj Tech Hub Logo" 
       className={`${className} object-contain transition-all duration-300 shrink-0 filter drop-shadow-[0_4px_12px_rgba(255,192,0,0.15)]`}
       referrerPolicy="no-referrer"
+      loading="eager"
+      fetchPriority="high"
+      width={64}
+      height={64}
       style={{ imageRendering: "high-quality" }}
     />
   );
@@ -1240,6 +1244,10 @@ export default function App() {
                                 alt={project.title}
                                 className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
                                 referrerPolicy="no-referrer"
+                                loading="lazy"
+                                decoding="async"
+                                width={144}
+                                height={220}
                               />
                               <div className="absolute bottom-0 left-0 right-0 bg-slate-950/70 backdrop-blur-xs p-1 px-2 flex justify-between items-center select-none text-[7px] font-sans">
                                 <span className="font-extrabold text-white">{project.placeholder}</span>
@@ -1267,6 +1275,10 @@ export default function App() {
                               alt={project.title}
                               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                               referrerPolicy="no-referrer"
+                              loading="lazy"
+                              decoding="async"
+                              width={600}
+                              height={450}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent flex items-end p-3">
                               <span className="bg-[#0052fe] text-white text-[10px] font-extrabold px-2.5 py-1 rounded shadow">
