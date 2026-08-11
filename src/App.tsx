@@ -437,7 +437,7 @@ export default function App() {
           
           {/* Logo container matching exact design of SURAJ logo */}
           <div 
-            className="flex items-center gap-3 select-none cursor-pointer group"
+            className="flex items-center gap-3 select-none cursor-pointer group shrink-0"
             onClick={() => scrollToSection(homeRef)}
             id="app-logo-container"
           >
@@ -459,51 +459,55 @@ export default function App() {
             </div>
           </div>
 
-          {/* Desktop Navigation Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8 text-base font-semibold" id="desktop-nav">
+          {/* Centered Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center justify-center flex-1 space-x-6 lg:space-x-8 text-base font-semibold px-4" id="desktop-nav">
             <button 
               onClick={() => scrollToSection(homeRef)}
-              className="text-white hover:text-yellow-300 transition-colors cursor-pointer"
+              className="text-white hover:text-yellow-300 transition-colors cursor-pointer whitespace-nowrap"
               id="nav-home"
             >
               Home
             </button>
             <button 
               onClick={() => scrollToSection(aboutRef)}
-              className="text-white hover:text-yellow-300 transition-colors cursor-pointer"
+              className="text-white hover:text-yellow-300 transition-colors cursor-pointer whitespace-nowrap"
               id="nav-about"
             >
               About
             </button>
             <button 
               onClick={() => scrollToSection(servicesRef)}
-              className="text-white hover:text-yellow-300 transition-colors cursor-pointer"
+              className="text-white hover:text-yellow-300 transition-colors cursor-pointer whitespace-nowrap"
               id="nav-services"
             >
               Services
             </button>
             <button 
               onClick={() => scrollToSection(projectsRef)}
-              className="text-white hover:text-yellow-300 transition-colors cursor-pointer"
+              className="text-white hover:text-yellow-300 transition-colors cursor-pointer whitespace-nowrap"
               id="nav-projects"
             >
               Projects
             </button>
             <button 
               onClick={() => scrollToSection(onlineServicesRef)}
-              className="text-white hover:text-yellow-300 transition-colors cursor-pointer"
+              className="text-white hover:text-yellow-300 transition-colors cursor-pointer whitespace-nowrap"
               id="nav-online-services"
             >
               Online Services
             </button>
+          </nav>
+
+          {/* Right Action Button */}
+          <div className="hidden md:flex items-center shrink-0" id="desktop-contact-container">
             <button 
               onClick={() => scrollToSection(contactRef)}
-              className="bg-[#FFC000] text-slate-900 border-none px-6 py-2.5 rounded-md font-bold hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer shadow-md"
+              className="bg-[#FFC000] text-slate-900 border-none px-6 py-2.5 rounded-md font-bold hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer shadow-md whitespace-nowrap"
               id="nav-contact"
             >
               Contact Us
             </button>
-          </nav>
+          </div>
 
           {/* Mobile hamburger menu trigger */}
           <div className="md:hidden flex items-center">
