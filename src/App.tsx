@@ -32,7 +32,15 @@ import {
   Github,
   Linkedin,
   Instagram,
-  Youtube
+  Youtube,
+  Receipt,
+  Users,
+  Search,
+  Layout,
+  PlayCircle,
+  GraduationCap,
+  ShoppingCart,
+  Settings
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -124,6 +132,33 @@ export default function App() {
     email: false
   });
 
+  // Auto-deselect service card when user clicks elsewhere on the website
+  useEffect(() => {
+    if (!formData.service) return;
+
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      // Do not clear if user clicks inside a service card or inside the contact form section
+      if (
+        target.closest('[id^="core-service-card-"]') || 
+        target.closest('[id^="service-card-"]') || 
+        target.closest('#contact-section')
+      ) {
+        return;
+      }
+      setFormData(prev => ({ ...prev, service: "" }));
+    };
+
+    const timer = setTimeout(() => {
+      document.addEventListener("click", handleGlobalClick);
+    }, 50);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("click", handleGlobalClick);
+    };
+  }, [formData.service]);
+
   // Scroll target refs
   const homeRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -201,6 +236,104 @@ export default function App() {
     }
   };
 
+  // Core services list matching "Our Core Services" reference design from user screenshot
+  const coreServicesData = [
+    {
+      id: "billing-software",
+      title: "Billing Software",
+      description: "GST-ready invoicing, transactions and billing for any business size.",
+      icon: Receipt,
+    },
+    {
+      id: "crm-software",
+      title: "CRM Software",
+      description: "Streamline leads, pipelines and post-sales support workflows.",
+      icon: Users,
+    },
+    {
+      id: "seo-smo",
+      title: "SEO / SMO",
+      description: "Boost visibility, traffic and conversions with data-driven optimisation.",
+      icon: Search,
+    },
+    {
+      id: "website-design",
+      title: "Website Design",
+      description: "Modern responsive websites that convert visitors into clients.",
+      icon: Layout,
+    },
+    {
+      id: "video-animation",
+      title: "Video Animation",
+      description: "2D/3D motion graphics that bring your brand story to life.",
+      icon: PlayCircle,
+    },
+    {
+      id: "school-erp",
+      title: "School ERP",
+      description: "Admissions, fees, attendance, exams and parent portal in one place.",
+      icon: GraduationCap,
+    },
+    {
+      id: "e-commerce",
+      title: "E-Commerce",
+      description: "Custom online stores with payments, inventory and smooth checkout.",
+      icon: ShoppingCart,
+    },
+    {
+      id: "erp-solutions",
+      title: "ERP Solutions",
+      description: "HR, accounts, inventory, purchase and production all integrated.",
+      icon: Settings,
+    },
+    {
+      id: "mobile-apps",
+      title: "Mobile Apps",
+      description: "iOS, Android & cross-platform Flutter / React Native development.",
+      icon: Smartphone,
+    },
+  ];
+
+  // Why Businesses Trust Suraj Tech Hub features list
+  const trustFeaturesData = [
+    {
+      id: "secure-reliable",
+      title: "Secure & Reliable",
+      description: "AES-256 encryption, live monitoring, and resilient systems keep your business data protected.",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "support-247",
+      title: "24 / 7 Support",
+      description: "Dedicated support via call, chat, and email so your team always has help close by.",
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "scalable-architecture",
+      title: "Scalable Architecture",
+      description: "Modern architecture designed to grow from small teams to high-volume enterprise workflows.",
+      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "industry-experts",
+      title: "Industry Experts",
+      description: "Specialists in software, compliance, finance, growth, and real business operations.",
+      image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "client-first",
+      title: "Client First Approach",
+      description: "Every decision starts with your business goals, user needs, and long-term ROI.",
+      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "on-time-delivery",
+      title: "On-Time Delivery",
+      description: "Clear milestones, weekly demos, and transparent delivery keep every project moving.",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+    }
+  ];
+
   // Preset services list based on "Our Expertise" screenshot
   const servicesList: Service[] = [
     {
@@ -248,8 +381,8 @@ export default function App() {
     },
     {
       name: "Instagram",
-      url: "https://www.instagram.com/its_.surajx01?igsh=eG16NHNmYzcyOXhq",
-      handle: "@its_.surajx01",
+      url: "https://www.instagram.com/suraj_tech_hub_?igsh=Mng0enBkendpZmNt",
+      handle: "@suraj_tech_hub_",
       icon: Instagram,
       color: "hover:bg-[#e1306c] hover:text-white hover:border-[#e1306c]",
       textColor: "text-pink-500",
@@ -637,132 +770,212 @@ export default function App() {
         </div>
       </section>
 
-      {/* SECTION 3: OUR EXPERTISE */}
+      {/* SECTION 3: OUR CORE SERVICES & EXPERTISE */}
       <section 
         ref={servicesRef} 
-        className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50"
+        className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50/80"
         id="services-section"
       >
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           
-          {/* Headings */}
-          <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20" id="services-header-group">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 inline-block relative pb-4 font-display" id="services-main-title">
-              Our Expertise
-              <span className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-[#FFC000] rounded-full"></span>
+          {/* Main Core Services Header (Matching reference screenshot precisely) */}
+          <div className="text-center max-w-3xl mx-auto mb-14 md:mb-18" id="services-header-group">
+            <span className="text-[#0092ff] font-bold text-xs md:text-sm tracking-[0.2em] uppercase mb-2 block font-display" id="core-services-eyebrow">
+              WHAT WE DO
+            </span>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 font-display block" id="services-main-title">
+              Our Core <span className="text-[#0052fe] relative inline-block">
+                Services
+                <span className="absolute left-0 -bottom-2 w-full h-1 bg-[#0052fe] rounded-full"></span>
+              </span>
             </h2>
-            <p className="text-slate-500 mt-5 text-base md:text-lg" id="services-subtitle">
-              Comprehensive digital solutions for the modern enterprise
+            <p className="text-amber-600 font-medium text-sm md:text-base mt-5" id="services-subtitle">
+              Smart software & digital solutions for modern businesses
             </p>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full" id="services-grid">
-            {servicesList.map((service, index) => {
-              const IconComp = service.icon;
-              const isSelected = 
-                (service.id === "mobile" && formData.service === "App Development") ||
-                (service.id === "web" && formData.service === "Web Development") ||
-                (service.id === "backend" && formData.service === "Backend/API");
+          {/* 9 Core Services Cards Grid (Exact replica of reference card layout) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 md:gap-6 w-full mb-16 md:mb-20" id="core-services-grid">
+            {coreServicesData.map((item) => {
+              const IconComp = item.icon;
+              const isSelected = formData.service === item.title;
 
               return (
                 <div 
-                  key={service.id}
-                  id={`service-card-${service.id}`}
-                  onClick={() => {
-                    const formValue = service.id === "mobile" ? "App Development" : service.id === "web" ? "Web Development" : "Backend/API";
-                    setFormData(prev => ({ ...prev, service: formValue }));
-                    setActiveCscService(null); // Clear any active digital/CSC services
-                    scrollToSection(contactRef);
+                  key={item.id}
+                  id={`core-service-card-${item.id}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (isSelected) {
+                      setFormData(prev => ({ ...prev, service: "" }));
+                    } else {
+                      setFormData(prev => ({ ...prev, service: item.title }));
+                      setActiveCscService(null);
+                      scrollToSection(contactRef);
+                    }
                   }}
-                  className={`bg-white border rounded-2xl p-8 transition-all duration-300 flex flex-col items-start cursor-pointer select-none relative active:scale-[0.97] ${
+                  className={`bg-white transition-all duration-300 rounded-3xl p-6 flex flex-col items-start cursor-pointer select-none group relative ${
                     isSelected 
-                      ? "border-[#0052fe] ring-4 ring-[#0052fe]/15 shadow-xl shadow-blue-500/10 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]" 
-                      : "border-slate-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] hover:border-blue-300 hover:shadow-xl md:hover:-translate-y-1 hover:bg-slate-50/10"
+                      ? "border-2 border-[#0052fe] ring-4 ring-[#0052fe]/20 shadow-xl shadow-blue-500/15 -translate-y-1 bg-gradient-to-br from-white to-blue-50/30" 
+                      : "border-2 border-slate-200/90 shadow-md shadow-slate-200/40 hover:border-[#0052fe] hover:shadow-xl hover:-translate-y-1.5"
                   }`}
                 >
-                  {/* Subtle Selection Badge */}
+                  {/* Selection Check Badge */}
                   {isSelected && (
-                    <span className="absolute top-4 right-4 bg-[#0052fe] text-white rounded-full p-1 shadow-sm" id={`active-badge-${service.id}`}>
+                    <span className="absolute top-4 right-4 bg-[#0052fe] text-white rounded-full p-1 shadow-sm" id={`core-badge-${item.id}`}>
                       <Check size={12} className="stroke-[3.5]" />
                     </span>
                   )}
 
-                  {/* Soft Background Blue Square For Icon */}
-                  <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-[#0052fe] mb-6 shadow-inner" id={`service-icon-box-${service.id}`}>
-                    <IconComp size={28} className="stroke-[1.75]" />
+                  {/* Icon Squircle Box matching screenshot */}
+                  <div className="w-13 h-13 md:w-14 md:h-14 bg-[#0052fe] rounded-2xl flex items-center justify-center text-white mb-5 shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform duration-300 shrink-0" id={`core-icon-box-${item.id}`}>
+                    <IconComp size={26} className="stroke-[2] text-white" />
                   </div>
 
-                  <h3 className="text-xl font-bold min-h-[3rem] text-slate-900 mb-4 flex items-center" id={`service-title-${service.id}`}>
-                    {service.title}
+                  {/* Service Title */}
+                  <h3 className="text-slate-900 font-bold text-lg md:text-xl mb-2 text-left group-hover:text-[#0052fe] transition-colors duration-200" id={`core-title-${item.id}`}>
+                    {item.title}
                   </h3>
 
-                  <p className="text-slate-600 text-sm md:text-base leading-relaxed flex-grow" id={`service-desc-${service.id}`}>
-                    {service.description}
+                  {/* Service Description */}
+                  <p className="text-slate-500 text-xs md:text-sm leading-relaxed text-left font-normal flex-grow" id={`core-desc-${item.id}`}>
+                    {item.description}
                   </p>
                 </div>
               );
             })}
           </div>
 
+          {/* Primary Flagship Engineering Pillars */}
+          <div className="w-full pt-8 border-t border-slate-200/80">
+            <div className="text-center mb-10">
+              <h3 className="text-xl md:text-2xl font-bold text-slate-800">Custom Engineering Expertise</h3>
+              <p className="text-slate-500 text-sm mt-1">High-performance custom software engineering tailored to your specifications</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full" id="services-grid">
+              {servicesList.map((service, index) => {
+                const IconComp = service.icon;
+                const isSelected = 
+                  (service.id === "mobile" && formData.service === "App Development") ||
+                  (service.id === "web" && formData.service === "Web Development") ||
+                  (service.id === "backend" && formData.service === "Backend/API");
+
+                return (
+                  <div 
+                    key={service.id}
+                    id={`service-card-${service.id}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const formValue = service.id === "mobile" ? "App Development" : service.id === "web" ? "Web Development" : "Backend/API";
+                      if (isSelected) {
+                        setFormData(prev => ({ ...prev, service: "" }));
+                      } else {
+                        setFormData(prev => ({ ...prev, service: formValue }));
+                        setActiveCscService(null);
+                        scrollToSection(contactRef);
+                      }
+                    }}
+                    className={`bg-white border-2 rounded-2xl p-8 transition-all duration-300 flex flex-col items-start cursor-pointer select-none relative active:scale-[0.97] ${
+                      isSelected 
+                        ? "border-[#0052fe] ring-4 ring-[#0052fe]/20 shadow-xl shadow-blue-500/15 md:-translate-y-1 bg-gradient-to-br from-white to-blue-50/30 scale-[1.01]" 
+                        : "border-slate-200/90 shadow-md shadow-slate-200/40 hover:border-blue-400 hover:shadow-xl md:hover:-translate-y-1 hover:bg-slate-50/10"
+                    }`}
+                  >
+                    {/* Subtle Selection Badge */}
+                    {isSelected && (
+                      <span className="absolute top-4 right-4 bg-[#0052fe] text-white rounded-full p-1 shadow-sm" id={`active-badge-${service.id}`}>
+                        <Check size={12} className="stroke-[3.5]" />
+                      </span>
+                    )}
+
+                    {/* Soft Background Blue Square For Icon */}
+                    <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-[#0052fe] mb-6 shadow-inner" id={`service-icon-box-${service.id}`}>
+                      <IconComp size={28} className="stroke-[1.75]" />
+                    </div>
+
+                    <h3 className="text-xl font-bold min-h-[3rem] text-slate-900 mb-4 flex items-center" id={`service-title-${service.id}`}>
+                      {service.title}
+                    </h3>
+
+                    <p className="text-slate-600 text-sm md:text-base leading-relaxed flex-grow" id={`service-desc-${service.id}`}>
+                      {service.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* SECTION 4: WHY CHOOSE SURAJ TECH */}
+      {/* SECTION 4: WHY BUSINESSES TRUST SURAJ TECH HUB */}
       <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-white" id="why-choose-section">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           
-          {/* Heading */}
-          <div className="text-center mb-16 md:mb-20" id="why-choose-header">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 font-display inline-block pb-4 relative" id="why-choose-title">
-              Why Choose Suraj Tech Hub
-              <span className="absolute bottom-0 left-[25%] right-[25%] h-1 bg-[#FFC000] rounded-full"></span>
+          {/* Section Header */}
+          <div className="text-center max-w-4xl mx-auto mb-12 md:mb-16" id="why-choose-header">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 font-display block" id="why-choose-title">
+              Why Businesses Trust <span className="text-[#0052fe] inline-block whitespace-nowrap">Suraj Tech Hub</span>
             </h2>
+            <p className="text-slate-500 font-medium text-sm md:text-base mt-4 max-w-2xl mx-auto" id="why-choose-subtitle">
+              Reliable software, practical support, and scalable systems built for growing businesses.
+            </p>
+            <div className="mt-6">
+              <button
+                onClick={() => scrollToSection(contactRef)}
+                className="bg-[#0052fe] hover:bg-blue-600 text-white font-semibold px-7 py-3 rounded-full text-sm md:text-base shadow-md hover:shadow-lg shadow-blue-500/20 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer inline-flex items-center gap-2"
+                id="btn-discuss-project"
+              >
+                <span>Discuss Your Project</span>
+              </button>
+            </div>
           </div>
 
-          {/* Feature List */}
-          <div className="space-y-10" id="why-choose-list-container">
-            
-            {/* Feature 1 */}
-            <div className="flex gap-4 md:gap-5 items-start animate-fade-in" id="why-feature-1">
-              <div className="w-6 h-6 rounded-full bg-[#FFC000] flex items-center justify-center shrink-0 mt-1 shadow-sm" id="why-feature-icon-1">
-                <Check size={14} className="stroke-[3.5] text-white" />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-lg md:text-xl font-bold text-slate-900" id="why-feature-title-1">Technical Excellence</h3>
-                <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-                  We adhere to strict coding standards and architectural patterns to ensure your product is maintainable and scalable.
-                </p>
-              </div>
-            </div>
+          {/* 6 Feature Image Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full" id="trust-features-grid">
+            {trustFeaturesData.map((feature) => (
+              <div 
+                key={feature.id}
+                id={`trust-card-${feature.id}`}
+                onClick={() => scrollToSection(contactRef)}
+                className="bg-white border-2 border-slate-100 rounded-2xl md:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:border-blue-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col group cursor-pointer"
+              >
+                {/* Image Banner */}
+                <div className="h-48 md:h-52 w-full overflow-hidden relative bg-slate-100 shrink-0">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/0 transition-colors duration-300"></div>
+                </div>
 
-            {/* Feature 2 */}
-            <div className="flex gap-4 md:gap-5 items-start animate-fade-in" id="why-feature-2">
-              <div className="w-6 h-6 rounded-full bg-[#FFC000] flex items-center justify-center shrink-0 mt-1 shadow-sm" id="why-feature-icon-2">
-                <Check size={14} className="stroke-[3.5] text-white" />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-lg md:text-xl font-bold text-slate-900" id="why-feature-title-2">Transparent Communication</h3>
-                <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-                  No jargon, no hidden fees. We keep you in the loop at every stage of the development process.
-                </p>
-              </div>
-            </div>
+                {/* Card Content Footer */}
+                <div className="p-6 md:p-7 flex flex-col flex-grow justify-between bg-white">
+                  <div>
+                    {/* Title + Arrow Button Row */}
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <h3 className="text-lg md:text-xl font-bold text-slate-900 group-hover:text-[#0052fe] transition-colors duration-200">
+                        {feature.title}
+                      </h3>
+                      <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-[#0052fe] group-hover:text-white transition-colors duration-200 shrink-0 shadow-xs">
+                        <ArrowRight size={15} className="stroke-[2.5]" />
+                      </div>
+                    </div>
 
-            {/* Feature 3 */}
-            <div className="flex gap-4 md:gap-5 items-start animate-fade-in" id="why-feature-3">
-              <div className="w-6 h-6 rounded-full bg-[#FFC000] flex items-center justify-center shrink-0 mt-1 shadow-sm" id="why-feature-icon-3">
-                <Check size={14} className="stroke-[3.5] text-white" />
+                    {/* Subtitle / Description */}
+                    <p className="text-slate-500 text-xs md:text-sm leading-relaxed font-normal">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="space-y-1">
-                <h3 className="text-lg md:text-xl font-bold text-slate-900" id="why-feature-title-3">On-Time Delivery</h3>
-                <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-                  We respect your timelines. Our agile project management ensures rapid milestones without compromising quality.
-                </p>
-              </div>
-            </div>
-
+            ))}
           </div>
+
         </div>
       </section>
 
