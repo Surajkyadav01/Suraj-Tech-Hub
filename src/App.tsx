@@ -52,12 +52,962 @@ import {
   Award,
   ShieldCheck,
   HeartHandshake,
-  Zap
+  Zap,
+  Shield,
+  Lock,
+  Scale,
+  FileCheck,
+  AlertCircle,
+  HelpCircle
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { IndustriesSection } from "./components/IndustriesSection";
-import { PrivacyPolicyView } from "./components/PrivacyPolicyView";
-import { TermsConditionsView } from "./components/TermsConditionsView";
+
+// --- EMBEDDED INDUSTRIES SECTION ---
+
+export interface IndustryCard {
+  id: string;
+  name: string;
+}
+
+export const industriesList: IndustryCard[] = [
+  { id: "education", name: "EDUCATION" },
+  { id: "hospital", name: "HOSPITAL" },
+  { id: "finance", name: "FINANCE" },
+  { id: "ecommerce", name: "E-COMMERCE" },
+  { id: "manufacturing", name: "MANUFACTURING" },
+  { id: "healthcare", name: "HEALTHCARE" },
+  { id: "supply-chain", name: "SUPPLY CHAIN" },
+  { id: "food-beverage", name: "FOOD & BEVERAGE" },
+  { id: "small-business", name: "SMALL BUSINESS" },
+  { id: "sports-fitness", name: "SPORTS & FITNESS" },
+  { id: "law", name: "LAW" },
+  { id: "tours-travel", name: "TOURS & TRAVEL" },
+  { id: "startup", name: "STARTUP" },
+  { id: "technology", name: "TECHNOLOGY" }
+];
+
+// High-fidelity colorful vector SVG illustrations matching the reference image precisely
+export const IndustryIcons: Record<string, React.FC<{ className?: string }>> = {
+  education: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Graduation Cap */}
+      <polygon points="32,8 4,20 32,32 60,20" fill="#1e293b" />
+      <polygon points="32,10 8,20 32,30 56,20" fill="#0f172a" />
+      <path d="M16 26.5V40C16 46 23 50 32 50C41 50 48 46 48 40V26.5" fill="#1e293b" />
+      <path d="M19 28V39C19 44 24.5 47.5 32 47.5C39.5 47.5 45 44 45 39V28" fill="#334155" />
+      {/* Golden Button & Tassel */}
+      <ellipse cx="32" cy="20" rx="3.5" ry="2" fill="#f59e0b" />
+      <path d="M32 20C38 22 47 25 49 32L51 44" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="51" cy="45" r="2.5" fill="#f59e0b" />
+      {/* Diploma Scroll */}
+      <rect x="20" y="52" width="24" height="6" rx="2" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="1.5" />
+      <rect x="29" y="51" width="6" height="8" rx="1" fill="#ef4444" />
+      <path d="M22 55H42" stroke="#94a3b8" strokeWidth="1" strokeDasharray="2 2" />
+    </svg>
+  ),
+
+  hospital: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Side wings */}
+      <rect x="8" y="24" width="16" height="34" rx="2" fill="#cbd5e1" stroke="#334155" strokeWidth="2" />
+      <rect x="40" y="24" width="16" height="34" rx="2" fill="#cbd5e1" stroke="#334155" strokeWidth="2" />
+      {/* Main tower */}
+      <rect x="18" y="14" width="28" height="44" rx="3" fill="#e2e8f0" stroke="#0f172a" strokeWidth="2.5" />
+      {/* Hospital Cross Badge on top */}
+      <circle cx="32" cy="23" r="6" fill="#10b981" />
+      <rect x="30" y="19.5" width="4" height="7" rx="0.8" fill="#ffffff" />
+      <rect x="28.5" y="21" width="7" height="4" rx="0.8" fill="#ffffff" />
+      {/* Windows */}
+      <rect x="22" y="32" width="4" height="4" rx="0.8" fill="#0284c7" />
+      <rect x="28" y="32" width="4" height="4" rx="0.8" fill="#0284c7" />
+      <rect x="34" y="32" width="4" height="4" rx="0.8" fill="#0284c7" />
+      <rect x="38" y="32" width="4" height="4" rx="0.8" fill="#0284c7" />
+      <rect x="22" y="39" width="4" height="4" rx="0.8" fill="#0284c7" />
+      <rect x="28" y="39" width="4" height="4" rx="0.8" fill="#0284c7" />
+      <rect x="34" y="39" width="4" height="4" rx="0.8" fill="#0284c7" />
+      <rect x="38" y="39" width="4" height="4" rx="0.8" fill="#0284c7" />
+      {/* Wing Windows */}
+      <rect x="11" y="29" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      <rect x="17" y="29" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      <rect x="11" y="36" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      <rect x="17" y="36" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      <rect x="44" y="29" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      <rect x="50" y="29" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      <rect x="44" y="36" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      <rect x="50" y="36" width="3" height="3.5" rx="0.5" fill="#38bdf8" />
+      {/* Emergency Entrance Door */}
+      <rect x="28" y="47" width="8" height="11" rx="1.5" fill="#0284c7" stroke="#0369a1" strokeWidth="1.5" />
+      <line x1="32" y1="47" x2="32" y2="58" stroke="#ffffff" strokeWidth="1" />
+    </svg>
+  ),
+
+  finance: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Golden Money Sack */}
+      <path d="M22 22C17 25 10 33 11 44C12 53 20 57 32 57C44 57 52 53 53 44C54 33 47 25 42 22C43 19 45 15 45 13C45 11 43 10 40 10C37 10 35 12 32 12C29 12 27 10 24 10C21 10 19 11 19 13C19 15 21 19 22 22Z" fill="#fbbf24" stroke="#d97706" strokeWidth="2.5" />
+      {/* Sack Tie Ribbon */}
+      <ellipse cx="32" cy="21" rx="10" ry="2.5" fill="#dc2626" />
+      <polygon points="32,22 37,29 27,29" fill="#dc2626" />
+      {/* Currency Dollar / Rupee Sign */}
+      <circle cx="32" cy="38" r="8" fill="#f59e0b" />
+      <path d="M32 32V44M29.5 34.5C29.5 34.5 31 33 33 33C35 33 36 34 36 35.5C36 37.5 32 38 32 38C32 38 28 38.5 28 40.5C28 42 29.5 43 32 43C34 43 35.5 42 35.5 42" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+      {/* Golden Coins Stack at Base */}
+      <ellipse cx="14" cy="53" rx="5" ry="2.5" fill="#fde047" stroke="#ca8a04" strokeWidth="1.2" />
+      <ellipse cx="16" cy="50" rx="5" ry="2.5" fill="#facc15" stroke="#ca8a04" strokeWidth="1.2" />
+      <ellipse cx="50" cy="53" rx="5" ry="2.5" fill="#fde047" stroke="#ca8a04" strokeWidth="1.2" />
+    </svg>
+  ),
+
+  ecommerce: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Store Awning */}
+      <path d="M12 24L16 12H48L52 24" fill="#38bdf8" />
+      <path d="M12 24C12 27 15 29 18 27C21 29 25 29 27 27C29 29 33 29 35 27C37 29 41 29 43 27C45 29 49 29 52 24" fill="#ea580c" />
+      <rect x="14" y="12" width="36" height="12" fill="#f97316" stroke="#c2410c" strokeWidth="2" />
+      {/* Awning Stripes */}
+      <polygon points="18,12 24,12 21,24 15,24" fill="#ffffff" />
+      <polygon points="30,12 36,12 34,24 28,24" fill="#ffffff" />
+      <polygon points="42,12 48,12 47,24 41,24" fill="#ffffff" />
+      {/* Shopping Cart Body */}
+      <path d="M14 34H20L25 48H47L51 36H24" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Goods inside Cart */}
+      <rect x="25" y="32" width="8" height="8" rx="1.5" fill="#ef4444" />
+      <rect x="34" y="28" width="9" height="11" rx="1.5" fill="#3b82f6" />
+      {/* Wheels */}
+      <circle cx="28" cy="54" r="3.5" fill="#1e293b" />
+      <circle cx="28" cy="54" r="1.5" fill="#ffffff" />
+      <circle cx="44" cy="54" r="3.5" fill="#1e293b" />
+      <circle cx="44" cy="54" r="1.5" fill="#ffffff" />
+    </svg>
+  ),
+
+  manufacturing: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Smoke Clouds */}
+      <circle cx="20" cy="11" r="3" fill="#cbd5e1" opacity="0.8" />
+      <circle cx="22" cy="7" r="4" fill="#94a3b8" opacity="0.6" />
+      <circle cx="33" cy="9" r="2.5" fill="#cbd5e1" opacity="0.8" />
+      {/* Factory Chimneys */}
+      <polygon points="18,28 17,16 23,16 22,28" fill="#64748b" stroke="#334155" strokeWidth="1.5" />
+      <polygon points="30,28 29,14 35,14 34,28" fill="#64748b" stroke="#334155" strokeWidth="1.5" />
+      {/* Sawtooth Factory Roof */}
+      <polygon points="12,56 12,38 22,30 22,38 32,30 32,38 42,30 42,56" fill="#0284c7" stroke="#0f172a" strokeWidth="2.5" />
+      {/* Industrial Warehouse Wall */}
+      <rect x="42" y="34" width="14" height="22" fill="#38bdf8" stroke="#0f172a" strokeWidth="2" />
+      {/* Large Rotating Industrial Cog / Gear */}
+      <circle cx="27" cy="46" r="6" fill="#f59e0b" stroke="#b45309" strokeWidth="2" />
+      <circle cx="27" cy="46" r="2.5" fill="#ffffff" />
+      {/* Windows */}
+      <rect x="45" y="38" width="4" height="4" fill="#ffffff" />
+      <rect x="50" y="38" width="4" height="4" fill="#ffffff" />
+      <rect x="45" y="45" width="4" height="4" fill="#ffffff" />
+      <rect x="50" y="45" width="4" height="4" fill="#ffffff" />
+    </svg>
+  ),
+
+  healthcare: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Medical Doctor Bag / Kit */}
+      <rect x="10" y="20" width="44" height="34" rx="7" fill="#ffffff" stroke="#e11d48" strokeWidth="3" />
+      {/* Kit Handle */}
+      <path d="M24 20V14C24 11.5 26 10 28.5 10H35.5C38 10 40 11.5 40 14V20" stroke="#e11d48" strokeWidth="3" strokeLinecap="round" />
+      {/* Prominent Red Healthcare Cross */}
+      <rect x="29" y="27" width="6" height="20" rx="1.5" fill="#ef4444" />
+      <rect x="22" y="34" width="20" height="6" rx="1.5" fill="#ef4444" />
+      {/* Metal Corners & Latches */}
+      <rect x="12" y="33" width="3" height="8" rx="1" fill="#cbd5e1" />
+      <rect x="49" y="33" width="3" height="8" rx="1" fill="#cbd5e1" />
+      {/* Stethoscope Accent */}
+      <circle cx="47" cy="47" r="4.5" fill="#38bdf8" stroke="#0284c7" strokeWidth="1.5" />
+    </svg>
+  ),
+
+  "supply-chain": ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Cargo Logistics Truck */}
+      <rect x="8" y="22" width="28" height="24" rx="2" fill="#3b82f6" stroke="#1e3a8a" strokeWidth="2" />
+      {/* Truck Cabin */}
+      <path d="M36 28H48L54 36V46H36V28Z" fill="#60a5fa" stroke="#1e3a8a" strokeWidth="2" />
+      {/* Cabin Window */}
+      <polygon points="40,31 46,31 50,36 40,36" fill="#e0f2fe" />
+      {/* Truck Wheels */}
+      <circle cx="18" cy="49" r="4.5" fill="#1e293b" />
+      <circle cx="18" cy="49" r="2" fill="#94a3b8" />
+      <circle cx="44" cy="49" r="4.5" fill="#1e293b" />
+      <circle cx="44" cy="49" r="2" fill="#94a3b8" />
+      {/* Delivery Box Parcel */}
+      <rect x="16" y="14" width="12" height="10" rx="1" fill="#f59e0b" stroke="#b45309" strokeWidth="1.2" />
+      <line x1="22" y1="14" x2="22" y2="24" stroke="#d97706" strokeWidth="1.2" />
+      {/* Connected Network Nodes */}
+      <circle cx="53" cy="18" r="3" fill="#10b981" />
+      <path d="M28 17L50 18" stroke="#10b981" strokeWidth="1.5" strokeDasharray="2 2" />
+    </svg>
+  ),
+
+  "food-beverage": ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Circular Emblem in Crimson Red */}
+      <circle cx="32" cy="32" r="26" fill="#dc2626" />
+      <circle cx="32" cy="32" r="22" fill="#b91c1c" />
+      <circle cx="32" cy="32" r="20" stroke="#f87171" strokeWidth="1" strokeDasharray="3 3" />
+      {/* Fork on Left */}
+      <path d="M21 20V26C21 28.5 23 30 25 30V44M23 20V26M25 20V26M25 30H21" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Dinner Plate in Center */}
+      <circle cx="32" cy="32" r="7.5" fill="#ffffff" />
+      <circle cx="32" cy="32" r="5" stroke="#ef4444" strokeWidth="1" />
+      {/* Dining Knife on Right */}
+      <path d="M39 20V44M39 20C41.5 20 43 23 43 28L39 30" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+
+  "small-business": ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Neighborhood Store Awning */}
+      <rect x="12" y="16" width="40" height="12" fill="#ef4444" stroke="#991b1b" strokeWidth="2" />
+      <polygon points="16,16 22,16 20,28 14,28" fill="#ffffff" />
+      <polygon points="26,16 32,16 30,28 24,28" fill="#ffffff" />
+      <polygon points="36,16 42,16 40,28 34,28" fill="#ffffff" />
+      <polygon points="46,16 52,16 50,28 44,28" fill="#ffffff" />
+      {/* Scallop drops */}
+      <circle cx="17" cy="28" r="3" fill="#ffffff" stroke="#991b1b" strokeWidth="1" />
+      <circle cx="27" cy="28" r="3" fill="#ffffff" stroke="#991b1b" strokeWidth="1" />
+      <circle cx="37" cy="28" r="3" fill="#ffffff" stroke="#991b1b" strokeWidth="1" />
+      <circle cx="47" cy="28" r="3" fill="#ffffff" stroke="#991b1b" strokeWidth="1" />
+      {/* Store Frontage Body */}
+      <rect x="14" y="30" width="36" height="24" rx="1.5" fill="#f8fafc" stroke="#1e293b" strokeWidth="2" />
+      {/* Glass Display Window */}
+      <rect x="18" y="35" width="14" height="14" rx="1" fill="#e0f2fe" stroke="#0284c7" strokeWidth="1.5" />
+      <line x1="20" y1="46" x2="28" y2="38" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" />
+      {/* Entrance Door */}
+      <rect x="36" y="35" width="10" height="19" rx="1" fill="#3b82f6" stroke="#1d4ed8" strokeWidth="1.5" />
+      <circle cx="43" cy="44" r="1.2" fill="#fbbf24" />
+    </svg>
+  ),
+
+  "sports-fitness": ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Treadmill Machine Base */}
+      <polygon points="12,50 48,44 54,49 14,54" fill="#0284c7" stroke="#0369a1" strokeWidth="1.5" />
+      {/* Treadmill Railing & Console */}
+      <path d="M46 44L43 28H39" stroke="#0369a1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Athletic Runner Person */}
+      <circle cx="32" cy="14" r="4.5" fill="#0284c7" />
+      <path d="M29 20L34 26L32 35" stroke="#0284c7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Arms in Sprint */}
+      <path d="M24 23L31 22L37 19" stroke="#0284c7" strokeWidth="2.5" strokeLinecap="round" />
+      {/* Forward Leg */}
+      <path d="M32 35L38 41L45 42" stroke="#0284c7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Back Leg */}
+      <path d="M32 35L26 38L21 46" stroke="#0284c7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+
+  law: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Central Pillar & Pedestal */}
+      <rect x="22" y="52" width="20" height="5" rx="2" fill="#78350f" stroke="#451a03" strokeWidth="1.5" />
+      <line x1="32" y1="16" x2="32" y2="52" stroke="#b45309" strokeWidth="3.5" strokeLinecap="round" />
+      <circle cx="32" cy="14" r="3.5" fill="#f59e0b" stroke="#78350f" strokeWidth="1.5" />
+      {/* Balance Beam */}
+      <path d="M14 20C23 18 41 18 50 20" stroke="#f59e0b" strokeWidth="3" strokeLinecap="round" />
+      {/* Left Pan & Chains */}
+      <line x1="14" y1="21" x2="9" y2="34" stroke="#d97706" strokeWidth="1.5" />
+      <line x1="14" y1="21" x2="19" y2="34" stroke="#d97706" strokeWidth="1.5" />
+      <path d="M8 34C8 38 20 38 20 34Z" fill="#fbbf24" stroke="#b45309" strokeWidth="1.5" />
+      {/* Right Pan & Chains */}
+      <line x1="50" y1="21" x2="45" y2="34" stroke="#d97706" strokeWidth="1.5" />
+      <line x1="50" y1="21" x2="55" y2="34" stroke="#d97706" strokeWidth="1.5" />
+      <path d="M44 34C44 38 56 38 56 34Z" fill="#fbbf24" stroke="#b45309" strokeWidth="1.5" />
+    </svg>
+  ),
+
+  "tours-travel": ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Blue Earth Globe */}
+      <circle cx="30" cy="34" r="20" fill="#38bdf8" stroke="#0284c7" strokeWidth="2" />
+      {/* Continents in Green */}
+      <path d="M22 22C24 24 28 23 27 27C26 31 32 30 31 35C30 38 26 37 25 41C24 45 20 44 19 46C14 43 11 36 12 30C13 25 18 21 22 22Z" fill="#10b981" />
+      <path d="M38 24C41 27 46 29 48 35C45 39 42 41 38 41C35 41 36 34 38 31C39 28 36 26 38 24Z" fill="#10b981" />
+      {/* Orbital Flight Path */}
+      <ellipse cx="32" cy="32" rx="26" ry="12" transform="rotate(-25 32 32)" stroke="#a855f7" strokeWidth="2" strokeDasharray="4 4" />
+      {/* Airplane */}
+      <g transform="translate(34, 10) rotate(15)">
+        <polygon points="12,4 16,14 10,14" fill="#ffffff" stroke="#1e293b" strokeWidth="1" />
+        <polygon points="12,0 14,16 10,16" fill="#f8fafc" stroke="#1e293b" strokeWidth="1.2" />
+        <polygon points="8,10 16,10 12,14" fill="#3b82f6" />
+        <polygon points="10,16 14,16 12,18" fill="#ef4444" />
+      </g>
+    </svg>
+  ),
+
+  startup: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Jet Flame Exhaust */}
+      <path d="M22 44C20 50 17 56 16 58C20 56 25 54 28 50" fill="#f97316" />
+      <path d="M21 45C22 49 20 53 19 55C22 53 24 51 26 48" fill="#fde047" />
+      {/* Rocket Main Body angled at 45 deg */}
+      <path d="M24 38L38 24C44 18 48 10 52 8C50 12 42 16 36 22L22 36" fill="#e2e8f0" />
+      <path d="M22 36C22 36 20 40 24 44C28 48 32 46 32 46L44 34C48 30 52 24 52 14C42 14 36 18 32 22L20 34" fill="#ffffff" stroke="#1e40af" strokeWidth="2.5" />
+      {/* Rocket Fins */}
+      <path d="M22 44L14 48L18 38" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
+      <path d="M36 28L46 32L42 24" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
+      {/* Porthole Window */}
+      <circle cx="36" cy="24" r="4.5" fill="#38bdf8" stroke="#0284c7" strokeWidth="1.5" />
+      <circle cx="37" cy="23" r="1.5" fill="#ffffff" />
+      {/* Sparkle Stars */}
+      <polygon points="12,16 13,20 17,21 13,22 12,26 11,22 7,21 11,20" fill="#fbbf24" />
+      <polygon points="50,46 51,48 53,49 51,50 50,52 49,50 47,49 49,48" fill="#fbbf24" />
+    </svg>
+  ),
+
+  technology: ({ className = "w-14 h-14" }) => (
+    <svg viewBox="0 0 64 64" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* High-Tech Circuit Board Circle */}
+      <circle cx="32" cy="32" r="26" fill="#0284c7" />
+      <circle cx="32" cy="32" r="23" fill="#0369a1" />
+      {/* Microchip Processor Core */}
+      <rect x="22" y="22" width="20" height="20" rx="3.5" fill="#ffffff" stroke="#0284c7" strokeWidth="2" />
+      {/* Chip Internal Die */}
+      <rect x="26" y="26" width="12" height="12" rx="2" fill="#38bdf8" />
+      {/* Processor Pins (Top, Bottom, Left, Right) */}
+      <line x1="26" y1="18" x2="26" y2="22" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="32" y1="18" x2="32" y2="22" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="38" y1="18" x2="38" y2="22" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="26" y1="42" x2="26" y2="46" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="32" y1="42" x2="32" y2="46" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="38" y1="42" x2="38" y2="46" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="18" y1="26" x2="22" y2="26" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="18" y1="32" x2="22" y2="32" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="18" y1="38" x2="22" y2="38" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="42" y1="26" x2="46" y2="26" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="42" y1="32" x2="46" y2="32" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      <line x1="42" y1="38" x2="46" y2="38" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />
+      {/* Circuit Trace Dots */}
+      <circle cx="16" cy="16" r="2" fill="#38bdf8" />
+      <circle cx="48" cy="16" r="2" fill="#38bdf8" />
+      <circle cx="48" cy="48" r="2" fill="#38bdf8" />
+      <circle cx="16" cy="48" r="2" fill="#38bdf8" />
+    </svg>
+  )
+};
+
+export const IndustriesSection: React.FC = () => {
+  return (
+    <section 
+      id="industries-section" 
+      className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-100/70 border-t border-b border-slate-200/80 relative"
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header with exact Diamond Accent from reference image */}
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-14">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 font-display">
+            Industries We Serve
+          </h2>
+
+          {/* Exact 5-diamond accent decoration from reference image */}
+          <div className="flex items-center justify-center gap-2 mt-4 mb-4" aria-hidden="true">
+            <span className="w-2.5 h-2.5 rotate-45 bg-[#0052fe] rounded-[1px]"></span>
+            <span className="w-2.5 h-2.5 rotate-45 bg-[#0052fe] rounded-[1px]"></span>
+            <span className="w-3.5 h-3.5 rotate-45 bg-[#0052fe] rounded-[1px] shadow-sm shadow-blue-500/50"></span>
+            <span className="w-2.5 h-2.5 rotate-45 bg-[#0052fe] rounded-[1px]"></span>
+            <span className="w-2.5 h-2.5 rotate-45 bg-[#0052fe] rounded-[1px]"></span>
+          </div>
+
+          <p className="text-slate-600 font-medium text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            Delivering tailored digital systems, high-performance web applications, and modern IT solutions across diverse business domains.
+          </p>
+        </div>
+
+        {/* 14 Industry Cards Grid - Highly visible, sharp white cards on soft grey background */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3.5 sm:gap-4 md:gap-5">
+          {industriesList.map((item) => {
+            const IconComponent = IndustryIcons[item.id] || IndustryIcons.technology;
+
+            return (
+              <div
+                key={item.id}
+                className="group relative bg-white rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-between text-center border-2 border-slate-200/90 shadow-[0_4px_14px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_32px_rgba(0,82,254,0.12)] hover:border-[#0052fe] hover:-translate-y-2 transition-all duration-300 select-none min-h-[148px] sm:min-h-[160px]"
+              >
+                {/* Illustrated Vector Icon with smooth hover animation */}
+                <div className="w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-center my-auto transition-transform duration-300 group-hover:scale-115 group-hover:-translate-y-0.5">
+                  <IconComponent className="w-full h-full drop-shadow-sm" />
+                </div>
+
+                {/* Industry Label - Bold, clean, high-contrast, transitions to brand blue on hover */}
+                <div className="w-full mt-2 pt-2 border-t border-slate-100">
+                  <h3 className="text-xs sm:text-[13px] font-black tracking-wider text-slate-800 uppercase transition-colors duration-200 group-hover:text-[#0052fe] leading-tight">
+                    {item.name}
+                  </h3>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- EMBEDDED PRIVACY POLICY VIEW ---
+
+interface PrivacyPolicyViewProps {
+  onBackToHome: () => void;
+}
+
+export const PrivacyPolicyView: React.FC<PrivacyPolicyViewProps> = ({ onBackToHome }) => {
+  return (
+    <div className="bg-slate-50 min-h-screen text-slate-800" id="privacy-policy-page">
+      {/* Hero Header */}
+      <div className="bg-[#0c1524] text-white py-14 px-4 sm:px-6 lg:px-8 border-b border-slate-800 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-0"></div>
+        <div className="max-w-5xl mx-auto relative z-10">
+          <button
+            onClick={onBackToHome}
+            className="inline-flex items-center gap-2 text-xs font-bold text-yellow-300 hover:text-yellow-400 mb-4 transition-colors cursor-pointer group"
+          >
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+            <span>Back to Home</span>
+          </button>
+
+          <div className="flex items-center gap-3 mb-2">
+            <span className="p-2 rounded-xl bg-blue-600/30 text-blue-400 border border-blue-500/30">
+              <Shield size={24} />
+            </span>
+            <span className="text-xs font-black tracking-widest text-blue-400 uppercase">
+              Legal & Trust Center
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white font-display tracking-tight">
+            Privacy Policy
+          </h1>
+
+          <p className="text-slate-400 text-sm sm:text-base mt-3 max-w-2xl leading-relaxed">
+            Effective Date: October 2026 • Last Updated: October 2026. Learn how Suraj Tech Hub collects, safeguards, and respects your business and personal data.
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sticky Left Navigation Summary */}
+          <div className="lg:col-span-1 hidden lg:block">
+            <div className="sticky top-24 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2">
+              <span className="text-[11px] font-black tracking-wider text-slate-400 uppercase block mb-2">
+                Quick Navigation
+              </span>
+              {[
+                { title: "1. Overview & Scope", href: "#overview" },
+                { title: "2. Information We Collect", href: "#info-collected" },
+                { title: "3. How Data Is Used", href: "#how-used" },
+                { title: "4. Client Confidentiality (NDA)", href: "#confidentiality" },
+                { title: "5. Third-Party Integrations", href: "#third-parties" },
+                { title: "6. Security & Encryption", href: "#security" },
+                { title: "7. Data Rights & Retention", href: "#retention" },
+                { title: "8. Grievance & Contact", href: "#contact-grievance" }
+              ].map((link, idx) => (
+                <a
+                  key={idx}
+                  href={link.href}
+                  className="block text-xs font-semibold text-slate-600 hover:text-[#0052fe] hover:translate-x-1 transition-all py-1"
+                >
+                  {link.title}
+                </a>
+              ))}
+
+              <div className="pt-4 border-t border-slate-100">
+                <button
+                  onClick={onBackToHome}
+                  className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer text-center block"
+                >
+                  Return to Website
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Policy Text Articles */}
+          <div className="lg:col-span-3 space-y-8 bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs">
+            {/* Section 1 */}
+            <section id="overview" className="scroll-mt-24">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  1
+                </span>
+                Overview & Scope
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                Welcome to <strong>Suraj Tech Hub</strong> ("Company", "we", "our", or "us"). We provide custom software engineering, full-stack web and mobile application development, IT consulting, cloud infrastructure management, and online citizen support services.
+              </p>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                This Privacy Policy describes our policies and practices regarding the collection, use, protection, and disclosure of information when you browse our website, initiate inquiries through our digital channels, or contract our professional development and technical services.
+              </p>
+            </section>
+
+            {/* Section 2 */}
+            <section id="info-collected" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  2
+                </span>
+                Information We Collect
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                We only collect information that is strictly necessary to evaluate project inquiries, deliver tailored software solutions, and provide post-deployment support:
+              </p>
+              <div className="space-y-3">
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <h3 className="text-sm font-bold text-slate-900 mb-1">A. Contact & Communication Details</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Name, email address, phone/WhatsApp number, company name, location, and project brief submitted via our contact and consultation inquiry forms.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <h3 className="text-sm font-bold text-slate-900 mb-1">B. Project Specifications & Credentials</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    For active projects, we may receive API keys, database credentials, design files, or brand assets provided directly by you to enable integration and deployment.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <h3 className="text-sm font-bold text-slate-900 mb-1">C. Technical Browsing Analytics</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Standard non-identifying telemetry such as browser type, operating system, referring URL, and approximate device screen resolution to optimize performance and responsiveness.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Section 3 */}
+            <section id="how-used" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  3
+                </span>
+                How We Use Your Information
+              </h2>
+              <ul className="space-y-2.5 text-sm text-slate-600">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 size={16} className="text-[#0052fe] shrink-0 mt-0.5" />
+                  <span><strong>Project Execution:</strong> To develop, test, configure, and deploy contracted web applications, mobile apps, and digital platforms.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 size={16} className="text-[#0052fe] shrink-0 mt-0.5" />
+                  <span><strong>Communication:</strong> To provide sprint updates, technical consultations, milestone completions, and invoice receipts.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 size={16} className="text-[#0052fe] shrink-0 mt-0.5" />
+                  <span><strong>Support & Warranty:</strong> To assist you during the post-launch bug-fix period and ongoing maintenance schedules.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 size={16} className="text-[#0052fe] shrink-0 mt-0.5" />
+                  <span><strong>Zero Spam Guarantee:</strong> We never sell, rent, trade, or monetize your contact information to third-party telemarketers or advertisers.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* Section 4 */}
+            <section id="confidentiality" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  4
+                </span>
+                Client Confidentiality & Non-Disclosure (NDA)
+              </h2>
+              <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/80 mb-3">
+                <div className="flex items-center gap-2 text-amber-900 font-bold text-sm mb-1">
+                  <Lock size={16} className="text-amber-700" />
+                  <span>Strict Intellectual Property & Business Confidentiality</span>
+                </div>
+                <p className="text-xs text-amber-800 leading-relaxed">
+                  Suraj Tech Hub honors strict confidentiality regarding your proprietary business logic, client lists, internal algorithms, and unreleased product roadmaps. All shared assets remain your exclusive property.
+                </p>
+              </div>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Upon project completion and clearance of contracted fees, complete ownership of the custom source code is handed over to the client.
+              </p>
+            </section>
+
+            {/* Section 5 */}
+            <section id="third-parties" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  5
+                </span>
+                Third-Party Integrations & Infrastructure
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                In building client applications, we integrate with industry-standard, secure third-party services as requested:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <strong className="block text-slate-900 mb-0.5">Code Hosting & CI/CD:</strong>
+                  GitHub, GitHub Pages, Gitlab, Vercel, Firebase
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <strong className="block text-slate-900 mb-0.5">Payment Gateways:</strong>
+                  Razorpay, Stripe, UPI Gateway integration
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <strong className="block text-slate-900 mb-0.5">Cloud Hosting:</strong>
+                  AWS, Google Cloud Platform, Hostinger, DigitalOcean
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <strong className="block text-slate-900 mb-0.5">Messaging APIs:</strong>
+                  WhatsApp Cloud API, Twilio, SendGrid
+                </div>
+              </div>
+            </section>
+
+            {/* Section 6 */}
+            <section id="security" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  6
+                </span>
+                Security & Data Safeguards
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                We apply modern engineering best practices to protect all client deliverables and communications:
+              </p>
+              <ul className="mt-3 space-y-2 text-xs sm:text-sm text-slate-600">
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>Enforced HTTPS/TLS encryption across all live web instances.</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>Environment variable isolation for database passwords and API tokens (no hardcoded secrets).</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>Role-based access controls and sanitization against SQL injection, XSS, and CSRF vulnerabilities.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* Section 7 */}
+            <section id="retention" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  7
+                </span>
+                Data Rights & Retention
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                You have the right to request access to the personal or business information we hold, request corrections, or ask for the deletion of temporary project staging files after final deployment.
+              </p>
+            </section>
+
+            {/* Section 8 */}
+            <section id="contact-grievance" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  8
+                </span>
+                Grievance Officer & Contact Information
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                If you have any questions, clarifications, or requests concerning this Privacy Policy, please reach out to our grievance team directly:
+              </p>
+              <div className="p-5 rounded-2xl bg-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-white">Suraj Tech Hub Support & Legal Desk</h3>
+                  <p className="text-xs text-slate-400 mt-1">Lead Software Engineer & Founder: Sunil Kumar Yadav (Suraj)</p>
+                  <p className="text-xs text-yellow-300 mt-1 flex items-center gap-1.5">
+                    <Mail size={13} />
+                    <span>ksurajyadav93@gmail.com</span>
+                  </p>
+                </div>
+
+                <button
+                  onClick={onBackToHome}
+                  className="px-5 py-2.5 rounded-xl bg-[#0052fe] hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer whitespace-nowrap"
+                >
+                  Return to Home
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- EMBEDDED TERMS & CONDITIONS VIEW ---
+
+interface TermsConditionsViewProps {
+  onBackToHome: () => void;
+}
+
+export const TermsConditionsView: React.FC<TermsConditionsViewProps> = ({ onBackToHome }) => {
+  return (
+    <div className="bg-slate-50 min-h-screen text-slate-800" id="terms-conditions-page">
+      {/* Hero Header */}
+      <div className="bg-[#0c1524] text-white py-14 px-4 sm:px-6 lg:px-8 border-b border-slate-800 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-0"></div>
+        <div className="max-w-5xl mx-auto relative z-10">
+          <button
+            onClick={onBackToHome}
+            className="inline-flex items-center gap-2 text-xs font-bold text-yellow-300 hover:text-yellow-400 mb-4 transition-colors cursor-pointer group"
+          >
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+            <span>Back to Home</span>
+          </button>
+
+          <div className="flex items-center gap-3 mb-2">
+            <span className="p-2 rounded-xl bg-blue-600/30 text-blue-400 border border-blue-500/30">
+              <Scale size={24} />
+            </span>
+            <span className="text-xs font-black tracking-widest text-blue-400 uppercase">
+              Service Agreement & Policies
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white font-display tracking-tight">
+            Terms & Conditions
+          </h1>
+
+          <p className="text-slate-400 text-sm sm:text-base mt-3 max-w-2xl leading-relaxed">
+            Effective Date: October 2026 • Last Updated: October 2026. Standard service delivery agreement, project scopes, milestones, warranties, and code ownership policies for Suraj Tech Hub.
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sticky Left Navigation Summary */}
+          <div className="lg:col-span-1 hidden lg:block">
+            <div className="sticky top-24 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2">
+              <span className="text-[11px] font-black tracking-wider text-slate-400 uppercase block mb-2">
+                Quick Navigation
+              </span>
+              {[
+                { title: "1. Acceptance of Terms", href: "#acceptance" },
+                { title: "2. Services & Scopes", href: "#services-scope" },
+                { title: "3. Milestones & Payments", href: "#milestones-payment" },
+                { title: "4. Code Ownership (IP)", href: "#ip-ownership" },
+                { title: "5. Revisions & Warranty", href: "#revisions-warranty" },
+                { title: "6. Client Responsibilities", href: "#client-duties" },
+                { title: "7. Third-Party Platforms", href: "#third-party-platforms" },
+                { title: "8. Limitation of Liability", href: "#liability" },
+                { title: "9. Governing Law", href: "#governing-law" }
+              ].map((link, idx) => (
+                <a
+                  key={idx}
+                  href={link.href}
+                  className="block text-xs font-semibold text-slate-600 hover:text-[#0052fe] hover:translate-x-1 transition-all py-1"
+                >
+                  {link.title}
+                </a>
+              ))}
+
+              <div className="pt-4 border-t border-slate-100">
+                <button
+                  onClick={onBackToHome}
+                  className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer text-center block"
+                >
+                  Return to Website
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Terms Articles */}
+          <div className="lg:col-span-3 space-y-8 bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs">
+            {/* Section 1 */}
+            <section id="acceptance" className="scroll-mt-24">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  1
+                </span>
+                Acceptance of Terms
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                By hiring <strong>Suraj Tech Hub</strong> ("Company", "we", "our") for website design, full-stack application development, software engineering, cloud maintenance, or online services, you ("Client", "User") agree to be bound by these Terms and Conditions.
+              </p>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                If you are entering into this agreement on behalf of a company, organization, or enterprise, you represent that you have the full legal authority to bind such entity to these provisions.
+              </p>
+            </section>
+
+            {/* Section 2 */}
+            <section id="services-scope" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  2
+                </span>
+                Services & Project Scopes of Work (SOW)
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                Each project undertaken by Suraj Tech Hub begins with an agreed Scope of Work (SOW), detailed proposal, or quotation defining:
+              </p>
+              <ul className="space-y-2 text-xs sm:text-sm text-slate-600 mb-3">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 size={16} className="text-[#0052fe] shrink-0 mt-0.5" />
+                  <span>Exact project deliverables, features, pages, and architectural specifications.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 size={16} className="text-[#0052fe] shrink-0 mt-0.5" />
+                  <span>Target sprint milestones, review periods, and final release schedule.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 size={16} className="text-[#0052fe] shrink-0 mt-0.5" />
+                  <span>Change Request Clause: Additional features requested outside the initial SOW are billed separately at our agreed hourly or milestone rate.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* Section 3 */}
+            <section id="milestones-payment" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  3
+                </span>
+                Payment Milestones & Invoicing
+              </h2>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                  <div className="p-3 bg-white rounded-xl border border-slate-200">
+                    <span className="text-xs font-bold text-slate-500 uppercase block">Milestone 1</span>
+                    <span className="text-lg font-black text-[#0052fe]">Advance / Kickoff</span>
+                    <span className="text-[11px] text-slate-500 block mt-1">To initiate architecture, design & core setup</span>
+                  </div>
+                  <div className="p-3 bg-white rounded-xl border border-slate-200">
+                    <span className="text-xs font-bold text-slate-500 uppercase block">Milestone 2</span>
+                    <span className="text-lg font-black text-slate-900">Prototype Review</span>
+                    <span className="text-[11px] text-slate-500 block mt-1">Upon functional staging preview approval</span>
+                  </div>
+                  <div className="p-3 bg-white rounded-xl border border-slate-200">
+                    <span className="text-xs font-bold text-slate-500 uppercase block">Milestone 3</span>
+                    <span className="text-lg font-black text-emerald-600">Final Deployment</span>
+                    <span className="text-[11px] text-slate-500 block mt-1">Prior to live domain push & source code handover</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Invoices must be settled within 7 days of milestone sign-off. Payments can be completed securely via UPI, Bank Transfer (IMPS/NEFT), or digital payment gateways.
+              </p>
+            </section>
+
+            {/* Section 4 */}
+            <section id="ip-ownership" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  4
+                </span>
+                Intellectual Property & Source Code Ownership
+              </h2>
+              <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-xs sm:text-sm text-blue-900 leading-relaxed mb-3 font-medium">
+                <strong>100% Client Ownership Guarantee:</strong> Once the contracted project fees have been paid in full, all custom source code, design assets, database structures, and assets engineered specifically for the client become the exclusive intellectual property of the Client.
+              </div>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                Suraj Tech Hub retains the right to display the completed public project interface (screenshots and URL) in our agency portfolio and case studies to demonstrate our demonstrated capabilities.
+              </p>
+            </section>
+
+            {/* Section 5 */}
+            <section id="revisions-warranty" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  5
+                </span>
+                Revisions & 30-Day Bug-Fix Warranty
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                Quality is our core foundation. We back our software engineering with a generous warranty period:
+              </p>
+              <ul className="space-y-2 text-xs sm:text-sm text-slate-600">
+                <li className="flex items-start gap-2">
+                  <ShieldCheck size={16} className="text-emerald-600 shrink-0 mt-0.5" />
+                  <span><strong>30-Day Free Bug Fixing:</strong> Following live deployment, any bugs or functional deviations from the agreed SOW are rectified free of charge for 30 consecutive days.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <ShieldCheck size={16} className="text-emerald-600 shrink-0 mt-0.5" />
+                  <span><strong>Design Iterations:</strong> Up to 2 rounds of standard revision during the UI/UX stage are included in every package.</span>
+                </li>
+              </ul>
+            </section>
+
+            {/* Section 6 */}
+            <section id="client-duties" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  6
+                </span>
+                Client Responsibilities
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Timely project delivery requires collaboration. Clients are responsible for providing needed brand assets (logos, high-res photos, text copy), API credentials (SMS, Payment, Maps), and prompt feedback during milestone reviews within 5 business days.
+              </p>
+            </section>
+
+            {/* Section 7 */}
+            <section id="third-party-platforms" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  7
+                </span>
+                Third-Party Platforms & Service Outages
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Suraj Tech Hub is not liable for temporary service interruptions caused by third-party cloud infrastructure (such as GitHub, AWS, Google Cloud, Razorpay, or domain registrar outages) outside our reasonable control. We maintain disaster recovery and multi-region backups where contracted.
+              </p>
+            </section>
+
+            {/* Section 8 */}
+            <section id="liability" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  8
+                </span>
+                Limitation of Liability
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                To the maximum extent permitted by applicable law, Suraj Tech Hub's aggregate liability under any contract shall be strictly limited to the total fees actually paid by the Client to Suraj Tech Hub for the specific project under dispute.
+              </p>
+            </section>
+
+            {/* Section 9 */}
+            <section id="governing-law" className="scroll-mt-24 pt-6 border-t border-slate-100">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-50 text-[#0052fe] flex items-center justify-center text-xs font-black">
+                  9
+                </span>
+                Governing Law & Jurisdiction
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                These terms shall be governed by and construed in accordance with the laws of India. Any legal dispute or controversy arising out of or in connection with these services shall be subject to the exclusive jurisdiction of the competent courts in Uttar Pradesh, India.
+              </p>
+              
+              <div className="p-5 rounded-2xl bg-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-white">Need a Signed Custom Contract or NDA?</h3>
+                  <p className="text-xs text-slate-400 mt-1">We readily sign bilateral enterprise NDAs and bespoke master services agreements (MSAs).</p>
+                  <p className="text-xs text-yellow-300 mt-1 flex items-center gap-1.5">
+                    <Mail size={13} />
+                    <span>ksurajyadav93@gmail.com</span>
+                  </p>
+                </div>
+
+                <button
+                  onClick={onBackToHome}
+                  className="px-5 py-2.5 rounded-xl bg-[#0052fe] hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer whitespace-nowrap"
+                >
+                  Return to Home
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 
 // Beautiful, high-fidelity SVG icon matching the new Suraj Tech Hub logo exactly
 function SurajLogoIcon({ className = "w-14 h-14 md:w-16 md:h-16" }: { className?: string }) {
