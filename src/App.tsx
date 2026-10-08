@@ -55,6 +55,9 @@ import {
   Zap
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { IndustriesSection } from "./components/IndustriesSection";
+import { PrivacyPolicyView } from "./components/PrivacyPolicyView";
+import { TermsConditionsView } from "./components/TermsConditionsView";
 
 // Beautiful, high-fidelity SVG icon matching the new Suraj Tech Hub logo exactly
 function SurajLogoIcon({ className = "w-14 h-14 md:w-16 md:h-16" }: { className?: string }) {
@@ -91,7 +94,7 @@ export default function App() {
   const [activeCscService, setActiveCscService] = useState<string | null>(null);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [activeAboutSubTab, setActiveAboutSubTab] = useState<"company" | "vision" | "leadership">("company");
-  const [currentView, setCurrentView] = useState<"home" | "about">("home");
+  const [currentView, setCurrentView] = useState<"home" | "about" | "privacy" | "terms">("home");
   
   // Real projects list (using direct real imagery)
   const projectsList = [
@@ -219,7 +222,7 @@ export default function App() {
   };
 
   const navigateTo = (
-    view: "home" | "about", 
+    view: "home" | "about" | "privacy" | "terms", 
     subTab?: "company" | "vision" | "leadership", 
     sectionRef?: RefObject<HTMLDivElement | null>
   ) => {
@@ -229,6 +232,12 @@ export default function App() {
     if (view === "about") {
       setCurrentView("about");
       if (subTab) setActiveAboutSubTab(subTab);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (view === "privacy") {
+      setCurrentView("privacy");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (view === "terms") {
+      setCurrentView("terms");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setCurrentView("home");
@@ -1340,6 +1349,10 @@ export default function App() {
             </div>
           </div>
         </div>
+      ) : currentView === "privacy" ? (
+        <PrivacyPolicyView onBackToHome={() => navigateTo("home", undefined, homeRef)} />
+      ) : currentView === "terms" ? (
+        <TermsConditionsView onBackToHome={() => navigateTo("home", undefined, homeRef)} />
       ) : (
         <main id="home-view-container">
 
@@ -1626,8 +1639,11 @@ export default function App() {
         </div>
       </section>
 
+      {/* SECTION 3: INDUSTRIES WE SERVE */}
+      <IndustriesSection />
+
       {/* SECTION 4: WHY BUSINESSES TRUST SURAJ TECH HUB */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-white" id="why-choose-section">
+      <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50/70 border-t border-slate-100" id="why-choose-section">
         <div className="max-w-7xl mx-auto">
           
           {/* Section Header */}
@@ -2660,10 +2676,10 @@ export default function App() {
       )}
 
       {/* FOOTER */}
-      <footer className="bg-[#090f1a] text-slate-400 py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-800" id="app-footer">
+      <footer className="bg-[#090f1a] text-slate-400 py-10 px-4 sm:px-6 lg:px-8 border-t border-slate-800" id="app-footer">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div 
-            className="flex items-center gap-3 select-none cursor-pointer group"
+            className="flex items-center gap-3 select-none cursor-pointer group shrink-0"
             onClick={() => scrollToSection(homeRef)}
             id="footer-logo"
           >
@@ -2685,30 +2701,53 @@ export default function App() {
             </div>
           </div>
 
-          {/* Connected Social Links */}
-          <div className="flex items-center gap-3" id="footer-socials-row">
-            {socialLinks.map((social) => {
-              const IconComp = social.icon;
-              return (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700/80 flex items-center justify-center transition-all duration-300 group hover:-translate-y-0.5"
-                  title={`Follow us on ${social.name}`}
-                  id={`footer-social-${social.name.toLowerCase()}`}
-                >
-                  <IconComp className="w-4.5 h-4.5 text-slate-400 group-hover:text-white transition-colors" />
-                </a>
-              );
-            })}
+          {/* Legal Policy Links - Strictly only Privacy Policy & Terms & Conditions */}
+          <div className="flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold text-slate-400">
+            <span className="text-slate-600 font-bold select-none">|</span>
+            <button 
+              onClick={() => navigateTo("privacy")} 
+              className="text-white hover:text-yellow-300 transition-colors cursor-pointer px-1 py-0.5 font-bold hover:underline whitespace-nowrap"
+              id="footer-link-privacy"
+            >
+              Privacy Policy
+            </button>
+            <span className="text-slate-600 font-bold select-none">|</span>
+            <button 
+              onClick={() => navigateTo("terms")} 
+              className="text-white hover:text-yellow-300 transition-colors cursor-pointer px-1 py-0.5 font-bold hover:underline whitespace-nowrap"
+              id="footer-link-terms"
+            >
+              Terms & Conditions
+            </button>
+            <span className="text-slate-600 font-bold select-none">|</span>
           </div>
 
-          <div className="text-center md:text-right" id="footer-copyright-box">
-            <p className="text-sm text-slate-400" id="footer-copyright-text">
-              © 2026 Suraj Tech Hub. All rights reserved.
-            </p>
+          {/* Social Links & Copyright */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 text-center md:text-right">
+            <div className="flex items-center gap-2.5" id="footer-socials-row">
+              {socialLinks.map((social) => {
+                const IconComp = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700/80 flex items-center justify-center transition-all duration-300 group hover:-translate-y-0.5"
+                    title={`Follow us on ${social.name}`}
+                    id={`footer-social-${social.name.toLowerCase()}`}
+                  >
+                    <IconComp className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+                  </a>
+                );
+              })}
+            </div>
+
+            <div id="footer-copyright-box">
+              <p className="text-xs sm:text-sm text-slate-400 whitespace-nowrap" id="footer-copyright-text">
+                © 2026 Suraj Tech Hub. All rights reserved.
+              </p>
+            </div>
           </div>
         </div>
       </footer>
